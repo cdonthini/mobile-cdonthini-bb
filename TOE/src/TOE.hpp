@@ -16,6 +16,7 @@ class TOE : public QObject
     Q_OBJECT
 public:
     TOE(bb::cascades::Application *app);
+    void addApplicationCover();
     virtual ~TOE() {}
 };
 

@@ -4,16 +4,25 @@ import bb.cascades 1.0
 NavigationPane {
     id: navigationPane
     Page {
+        id: homePage
+
         // page with a picture thumbnail
         Container {
-            background: Color.Black
+            background: backgroundPaint.imagePaint
+            attachedObjects: [
+                    ImagePaintDefinition {
+                        id: backgroundPaint
+                        imageSource: "asset:///images/background.amd"
+                        repeatPattern: RepeatPattern.XY
+                    }
+                ]
             layout: DockLayout {
             }
             Button {
                 horizontalAlignment: HorizontalAlignment.Center
                 verticalAlignment: VerticalAlignment.Center
-                text: qsTr("Show detail")
-                imageSource: "asset:///images/picture1thumb.png"
+                text: qsTr("Find Your Age")
+                //imageSource: "asset:///images/picture1thumb.png"
                 onClicked: {
                     // show detail page when the button is clicked
                     var page = getSecondPage();
@@ -24,13 +33,14 @@ NavigationPane {
                 function getSecondPage() {
                     if (! secondPage) {
                         secondPage = secondPageDefinition.createObject();
+                        secondPage.nav = navigationPane;
                     }
                     return secondPage;
                 }
                 attachedObjects: [
                     ComponentDefinition {
                         id: secondPageDefinition
-                        source: "DetailsPage.qml"
+                        source: "pickDay.qml"
                     }
                 ]
             }

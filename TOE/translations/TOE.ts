@@ -22,8 +22,8 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="15"/>
-        <source>Show detail</source>
+        <location filename="../assets/main.qml" line="24"/>
+        <source>Find Your Age</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
