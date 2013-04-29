@@ -20,9 +20,9 @@
     </message>
 </context>
 <context>
-    <name>main</name>
+    <name>Main</name>
     <message>
-        <location filename="../assets/main.qml" line="24"/>
+        <location filename="../assets/Main.qml" line="18"/>
         <source>Find Your Age</source>
         <translation type="unfinished"></translation>
     </message>

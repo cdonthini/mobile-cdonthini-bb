@@ -9,13 +9,13 @@ Page {
     }
     Container {
         background: backgroundPaint.imagePaint
-                attachedObjects: [
-                        ImagePaintDefinition {
-                            id: backgroundPaint
-                            imageSource: "asset:///images/background.amd"
-                            repeatPattern: RepeatPattern.XY
-                        }
-                    ]
+//                attachedObjects: [
+//                        ImagePaintDefinition {
+//                            id: backgroundPaint
+//                            imageSource: "asset:///images/background.amd"
+//                            repeatPattern: RepeatPattern.XY
+//                        }
+//                    ]
         ListView {
             id: dayList
             dataModel: XmlDataModel {
@@ -24,12 +24,14 @@ Page {
             layoutProperties: StackLayoutProperties {
                 spaceQuota: 1.0
             }
+            
             listItemComponents: [
                  ListItemComponent {
                      type: "day"
                      StandardListItem {
+                         
                         title: {
-                         ListItemData.dayname   
+                         ListItemData.dayname                           
                         }
                         
                     }

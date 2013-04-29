@@ -9,13 +9,7 @@ NavigationPane {
         // page with a picture thumbnail
         Container {
             background: backgroundPaint.imagePaint
-            attachedObjects: [
-                    ImagePaintDefinition {
-                        id: backgroundPaint
-                        imageSource: "asset:///images/background.amd"
-                        repeatPattern: RepeatPattern.XY
-                    }
-                ]
+            
             layout: DockLayout {
             }
             Button {

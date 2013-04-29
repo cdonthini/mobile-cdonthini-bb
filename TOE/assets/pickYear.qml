@@ -10,13 +10,13 @@ Page {
     }
     Container {
         background: backgroundPaint.imagePaint
-        attachedObjects: [
-            ImagePaintDefinition {
-                id: backgroundPaint
-                imageSource: "asset:///images/background.amd"
-                repeatPattern: RepeatPattern.XY
-            }
-        ]
+//        attachedObjects: [
+//            ImagePaintDefinition {
+//                id: backgroundPaint
+//                imageSource: "asset:///images/background.amd"
+//                repeatPattern: RepeatPattern.XY
+//            }
+//        ]
         ListView {
             id: yearList
             dataModel: XmlDataModel {

@@ -12,13 +12,13 @@ Page {
     }
     Container {
         background: backgroundPaint.imagePaint
-        attachedObjects: [
-                ImagePaintDefinition {
-                    id: backgroundPaint
-                    imageSource: "asset:///images/background.amd"
-                    repeatPattern: RepeatPattern.XY
-                }
-            ]
+//        attachedObjects: [
+//                ImagePaintDefinition {
+//                    id: backgroundPaint
+//                    imageSource: "asset:///images/background.amd"
+//                    repeatPattern: RepeatPattern.XY
+//                }
+//            ]
         Label {
             text: {
                 "Year: " + yearname + "\n Month: " + monthnum + "\n Day: " + dayname
@@ -68,7 +68,7 @@ Page {
             attachedObjects: [
                 ComponentDefinition {
                     id: homePageDefinition
-                    source: "pickDay.qml"
+                    source: "newmain.qml"
                 }
             ]
             translationY: 10.0
