@@ -18,6 +18,15 @@ NavigationPane {
                 value: "1991-06-9"
                 expanded: true
                 horizontalAlignment: HorizontalAlignment.Center
+                onValueChanged: {
+                    if (control.selectedValue == 1) {
+                        ageLabel.text = control.age(control.selectedValue);
+                    } else if (control.selectedValue == 2) {
+                        ageLabel.text = control.age(control.selectedValue);
+                    } else if (control.selectedValue == 3) {
+                        ageLabel.text = control.age(control.selectedValue);
+                    }
+                }
             }
             Divider {
             }
@@ -28,7 +37,7 @@ NavigationPane {
                     text: "Years"
                     value: "1"
                     description: "Get the age in years"
-                    selected: true
+                    
                 }
                 Option {
                     id: months
@@ -51,6 +60,7 @@ NavigationPane {
                         ageLabel.text = age(control.selectedValue);
                     }
                 }
+                selectedOption: years
                 property alias result: ageLabel.text
                 function age(option) {
                     var dmy = new Date();
@@ -59,11 +69,9 @@ NavigationPane {
                     var years = dmy.getFullYear() - 1 - parseInt(dob.value.getFullYear()) + parseInt(months / 12);
                     if (option == 1) {
                         result = years + " Years " + months % 12 + " Months " + days % 30 + " Days " + " old "
-                    }
-                    else if (option == 2) {
+                    } else if (option == 2) {
                         result = ((years * 12 ) + (months % 12 ) ) + " Months " + days % 30 + " Days " + " old "
-                    }
-                    else if (option == 3) {
+                    } else if (option == 3) {
                         result = (((years * 12 ) + (months % 12 ) ) * 30 ) + days % 30 + " Days " + " old "
                     }
                     return result;
@@ -73,7 +81,6 @@ NavigationPane {
             }
             Label {
                 id: ageLabel
-
                 multiline: true
                 horizontalAlignment: HorizontalAlignment.Center
             }
