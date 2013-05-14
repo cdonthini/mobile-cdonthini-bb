@@ -6,6 +6,7 @@
 #include <QLocale>
 #include <QTranslator>
 #include <Qt/qdeclarativedebug.h>
+#include <bb/data/DataSource>
 
 using namespace bb::cascades;
 

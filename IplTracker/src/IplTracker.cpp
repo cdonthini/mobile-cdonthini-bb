@@ -4,6 +4,7 @@
 #include <bb/cascades/Application>
 #include <bb/cascades/QmlDocument>
 #include <bb/cascades/AbstractPane>
+#include <bb/data/DataSource>
 
 using namespace bb::cascades;
 

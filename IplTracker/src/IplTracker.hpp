@@ -1,7 +1,7 @@
 // Navigation pane project template
 #ifndef IplTracker_HPP_
 #define IplTracker_HPP_
-
+#include <bb/data/DataSource>
 #include <QObject>
 
 namespace bb { namespace cascades { class Application; }}

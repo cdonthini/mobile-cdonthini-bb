@@ -1,0 +1,11 @@
+[
+{ "order": 1, "name": "Chennai Super Kings", image="../images/csk_logo.jpg", "feed": "http://www.espncricinfo.com/rss/content/story/feeds/335974.xml" },
+{ "order": 2, "name": "Delhi Daredevils", image="../images/dd_logo.jpg", "feed": "http://www.espncricinfo.com/rss/content/story/feeds/335975.xml" },
+{ "order": 3, "name": "Kings XI Punjab", image="../images/kp_logo.jpg", "feed": "http://www.espncricinfo.com/rss/content/story/feeds/335973.xml" },
+{ "order": 4, "name": "Kolkata Knight Riders", image="../images/kkr_logo.jpg", "feed": "http://www.espncricinfo.com/rss/content/story/feeds/335971.xml" },
+{ "order": 5, "name": "Mumbai Indians", image="../images/mi_logo.jpg", "feed": "http://www.espncricinfo.com/rss/content/story/feeds/335978.xml" },
+{ "order": 6, "name": "Pune Warriors", image="../images/pwi_logo.jpg", "feed": "http://www.espncricinfo.com/rss/content/story/feeds/474666.xml" },
+{ "order": 7, "name": "Rajasthan Royals", image="../images/rr_logo.jpg", "feed": "http://www.espncricinfo.com/rss/content/story/feeds/335977.xml" },
+{ "order": 8, "name": "Royal Challengers Bangalore", image="../images/rcb_logo.jpg", "feed": "http://www.espncricinfo.com/rss/content/story/feeds/335970.xml" },
+{ "order": 9, "name": "Sunrisers Hyderabad", image="../images/srh_logo.jpg", "feed": "http://www.espncricinfo.com/rss/content/story/feeds/628333.xml" }
+]

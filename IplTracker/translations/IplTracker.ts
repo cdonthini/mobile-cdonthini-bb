@@ -22,8 +22,14 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="15"/>
-        <source>Show detail</source>
+        <location filename="../assets/main.qml" line="39"/>
+        <location filename="../assets/main.qml" line="52"/>
+        <source>IPL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/main.qml" line="56"/>
+        <source>Yahoo!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
