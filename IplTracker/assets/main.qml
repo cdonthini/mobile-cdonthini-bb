@@ -4,19 +4,16 @@ import bb.cascades 1.0
 NavigationPane {
     id: navigationPane
     Page {
-        id: homePage
-
         // page with a picture thumbnail
         Container {
-            background: backgroundPaint.imagePaint
-            
+            background: Color.Black
             layout: DockLayout {
             }
             Button {
                 horizontalAlignment: HorizontalAlignment.Center
                 verticalAlignment: VerticalAlignment.Center
-                text: qsTr("Find Your Age")
-                //imageSource: "asset:///images/picture1thumb.png"
+                text: qsTr("Show detail")
+                imageSource: "asset:///images/picture1thumb.png"
                 onClicked: {
                     // show detail page when the button is clicked
                     var page = getSecondPage();
@@ -27,14 +24,13 @@ NavigationPane {
                 function getSecondPage() {
                     if (! secondPage) {
                         secondPage = secondPageDefinition.createObject();
-                        secondPage.nav = navigationPane;
                     }
                     return secondPage;
                 }
                 attachedObjects: [
                     ComponentDefinition {
                         id: secondPageDefinition
-                        source: "pickDay.qml"
+                        source: "DetailsPage.qml"
                     }
                 ]
             }
@@ -49,5 +45,4 @@ NavigationPane {
         // don't forget to enable screen rotation in bar-bescriptor.xml (Application->Orientation->Auto-orient)
         OrientationSupport.supportedDisplayOrientation = SupportedDisplayOrientation.All;
     }
-   
 }

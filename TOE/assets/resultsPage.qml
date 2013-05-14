@@ -1,24 +1,23 @@
 import bb.cascades 1.0
 
 Page {
-    id: yearPage
+    id: resultsPage
     property variant nav
     property variant yearname
     property variant monthnum
     property variant dayname
     titleBar: TitleBar {
-        
         title: "Results"
     }
     Container {
         background: backgroundPaint.imagePaint
-//        attachedObjects: [
-//                ImagePaintDefinition {
-//                    id: backgroundPaint
-//                    imageSource: "asset:///images/background.amd"
-//                    repeatPattern: RepeatPattern.XY
-//                }
-//            ]
+        //        attachedObjects: [
+        //                ImagePaintDefinition {
+        //                    id: backgroundPaint
+        //                    imageSource: "asset:///images/background.amd"
+        //                    repeatPattern: RepeatPattern.XY
+        //                }
+        //            ]
         Label {
             text: {
                 "Year: " + yearname + "\n Month: " + monthnum + "\n Day: " + dayname
@@ -49,7 +48,6 @@ Page {
         }
         Button {
             horizontalAlignment: HorizontalAlignment.Center
-            
             text: "Start Over"
             onClicked: {
                 // show detail page when the button is clicked
@@ -61,17 +59,17 @@ Page {
             function getHomePage() {
                 if (! homePage) {
                     homePage = homePageDefinition.createObject();
-                    homePage.nav = nav;
+                    homePage.navigationPane = nav;
                 }
                 return homePage;
             }
-            attachedObjects: [
-                ComponentDefinition {
-                    id: homePageDefinition
-                    source: "newmain.qml"
-                }
-            ]
-            translationY: 10.0
+            
         }
     }
+    attachedObjects: [
+        ComponentDefinition {
+            id: homePageDefinition
+            source: "Main.qml"
+        }
+    ]
 }

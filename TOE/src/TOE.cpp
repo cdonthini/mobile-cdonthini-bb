@@ -13,7 +13,7 @@ TOE::TOE(bb::cascades::Application *app)
 {
     // create scene document from main.qml asset
     // set parent to created document to ensure it exists for the whole application lifetime
-    QmlDocument *qml = QmlDocument::create("asset:///newmain.qml").parent(this);
+    QmlDocument *qml = QmlDocument::create("asset:///NewMain.qml").parent(this);
 
     // create root object for the UI
     AbstractPane *root = qml->createRootObject<AbstractPane>();
