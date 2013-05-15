@@ -1,32 +1,23 @@
-// Navigation pane project template
-#include "IplTracker.hpp"
-
+#include <bb/cascades/AbstractPane>
 #include <bb/cascades/Application>
-
-#include <QLocale>
-#include <QTranslator>
-#include <Qt/qdeclarativedebug.h>
+#include <bb/cascades/QmlDocument>
 #include <bb/data/DataSource>
 
 using namespace bb::cascades;
 
 Q_DECL_EXPORT int main(int argc, char **argv)
 {
-    // this is where the server is started etc
+    // We want to use DataSource in QML
+    bb::data::DataSource::registerQmlTypes();
+
     Application app(argc, argv);
 
-    // localization support
-    QTranslator translator;
-    QString locale_string = QLocale().name();
-    QString filename = QString( "IplTracker_%1" ).arg( locale_string );
-    if (translator.load(filename, "app/native/qm")) {
-        app.installTranslator( &translator );
-    }
+    // Load the UI description from main.qml
+    QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(&app);
 
-    // create the application pane object to init UI etc.
-    new IplTracker(&app);
+    // Create the application scene
+    AbstractPane *appPage = qml->createRootObject<AbstractPane>();
+    Application::instance()->setScene(appPage);
 
-    // we complete the transaction started in the app constructor and start the client event loop here
-    return Application::exec();
-    // when loop is exited the Application deletes the scene which deletes all its children (per qt rules for children)
+    return Application::instance()->exec();
 }
