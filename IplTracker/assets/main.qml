@@ -84,10 +84,9 @@ NavigationPane {
         },
         GroupDataModel {
             id: teamDataModel
-            sortingKeys: [
-                "pubDate"
-            ]
+
             grouping: ItemGrouping.None
+            sortedAscending: true
         },
         DataSource {
             id: teamDataSource
@@ -128,34 +127,35 @@ NavigationPane {
                                     type: "item"
                                     ArticleItem {
                                         title: ListItemData.title
-                                        pubDate: ListItemData.pubDate
                                     }
                                 }
                             ]
                             onTriggered: {
                                 var newsItem = teamDataModel.data(indexPath);
                                 var page = newsPage.createObject();
-                                page.htmlContent = newsItem.link;
+                                page.htmlContent = newsItem.guid;
                                 //page.htmlContent = "http://www.espncricinfo.com/indian-premier-league-2013/content/story/635879.html";
                                 mainNavi.push(page);
                             }
-                        }//listview - list
-                    }//Container - title n list
-                }//Container
+                        } //listview - list
+                    } //Container - title n list
+                } //Container
             } //teamNewsListPage
-        },//component Definition
+        }, //component Definition
         ComponentDefinition {
             id: newsPage
             Page {
-                 property alias htmlContent: newsView.url
-                 
-                 Container {
-                     ScrollView {
+                property alias htmlContent: newsView.url
+                Container {
+                    layout: DockLayout {
+                    }
+                    ScrollView {
                         WebView {
-                            id: newsView;
+                            id: newsView
+                            settings.activeTextEnabled: true
                         }
                     }
-                 }  
+                }
             }
         }
     ]
