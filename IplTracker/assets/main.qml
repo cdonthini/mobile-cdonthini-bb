@@ -84,9 +84,7 @@ NavigationPane {
         },
         GroupDataModel {
             id: teamDataModel
-
             grouping: ItemGrouping.None
-            sortedAscending: true
         },
         DataSource {
             id: teamDataSource
@@ -127,6 +125,7 @@ NavigationPane {
                                     type: "item"
                                     ArticleItem {
                                         title: ListItemData.title
+                                        pubDate: ListItemData.pubDate
                                     }
                                 }
                             ]
