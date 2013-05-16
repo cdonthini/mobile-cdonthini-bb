@@ -1,5 +1,6 @@
 import bb.cascades 1.0
 import bb.data 1.0
+import WebPageComponent 1.0
 
 NavigationPane {
     id: mainNavi
@@ -85,7 +86,6 @@ NavigationPane {
         GroupDataModel {
             id: teamDataModel
             grouping: ItemGrouping.None
-            sortedAscending: true
         },
         DataSource {
             id: teamDataSource
@@ -126,6 +126,7 @@ NavigationPane {
                                     type: "item"
                                     ArticleItem {
                                         title: ListItemData.title
+                                        pubDate: ListItemData.pubDate
                                     }
                                 }
                             ]
@@ -133,7 +134,7 @@ NavigationPane {
                                 var newsItem = teamDataModel.data(indexPath);
                                 var page = newsPage.createObject();
                                 page.htmlContent = newsItem.guid;
-                                //page.htmlContent = "http://www.espncricinfo.com/indian-premier-league-2013/content/story/635879.html";
+                                //page.htmlTitle = newsItem.description;
                                 mainNavi.push(page);
                             }
                         } //listview - list
@@ -141,37 +142,37 @@ NavigationPane {
                 } //Container
             } //teamNewsListPage
         } //component Definition
-//        ,
-        //        ComponentDefinition {
-//            id: newsPage
-//            Page {
-//                property alias htmlContent: newsView.url
-//                Container {
-//                    layout: DockLayout {
-//                    }
-//                    ScrollView {
-//                        WebView {
-//                            id: newsView
-//                            settings.activeTextEnabled: true
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        ,
+,
         ComponentDefinition {
             id: newsPage
             Page {
-                property alias htmlContent: newsView.url
+                property alias htmlContent: newsWebPage.url
+                //property alias htmlTitle: newsPageTitle.text
                 Container {
-                    layout: DockLayout {
+                    ActivityIndicator {
+                        id: indicator
+                        enabled: true
+                        running: true
                     }
-                    
+                    Label {
+                        id: newsPageTitle
+                        multiline: true
+                    }
+                    attachedObjects: [
                         WebPage {
-                            id: newsView
-                            settings.activeTextEnabled: true
+                            id: newsWebPage
+                            onLoadingChanged: {
+                                if (loadRequest.status == WebLoadStatus.Started) {
+                                    indicator.stop();
+                                } else if (loadRequest.status == WebLoadStatus.Failed) {
+                                    newsPageTitle.setText("Load failed.")
+                                }
+                            }
+                            onTitleChanged: {
+                                newsPageTitle.setText(title)
+                            }
                         }
-                    
+                    ]
                 }
             }
         }
