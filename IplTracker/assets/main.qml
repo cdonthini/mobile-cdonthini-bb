@@ -84,7 +84,6 @@ NavigationPane {
         },
         GroupDataModel {
             id: teamDataModel
-
             grouping: ItemGrouping.None
             sortedAscending: true
         },
@@ -141,7 +140,25 @@ NavigationPane {
                     } //Container - title n list
                 } //Container
             } //teamNewsListPage
-        }, //component Definition
+        } //component Definition
+//        ,
+        //        ComponentDefinition {
+//            id: newsPage
+//            Page {
+//                property alias htmlContent: newsView.url
+//                Container {
+//                    layout: DockLayout {
+//                    }
+//                    ScrollView {
+//                        WebView {
+//                            id: newsView
+//                            settings.activeTextEnabled: true
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        ,
         ComponentDefinition {
             id: newsPage
             Page {
@@ -149,12 +166,12 @@ NavigationPane {
                 Container {
                     layout: DockLayout {
                     }
-                    ScrollView {
-                        WebView {
+                    
+                        WebPage {
                             id: newsView
                             settings.activeTextEnabled: true
                         }
-                    }
+                    
                 }
             }
         }
