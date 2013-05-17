@@ -21,19 +21,13 @@ Container {
 
     layout: DockLayout {}
 
-    ImageView {
-        horizontalAlignment: HorizontalAlignment.Fill
-        verticalAlignment: VerticalAlignment.Fill
-
-        imageSource: "asset:///images/article_background.png"
-    }
 
     Container {
         horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
 
         layout: StackLayout {
-            orientation: LayoutOrientation.LeftToRight
+            orientation: LayoutOrientation.BottomToTop
         }
 
         Container {
@@ -55,11 +49,5 @@ Container {
             }
         }
 
-        ImageView {
-            verticalAlignment: VerticalAlignment.Center
-            minWidth: 20
-
-            imageSource: "asset:///images/arrow.png"
-        }
     }
 }

@@ -1,7 +1,6 @@
 1
-20
+17
 ArticleItem.qml
-DetailsPage.qml
 images/beer.png
 images/csk_logo.png
 images/dd_logo.png
@@ -18,5 +17,3 @@ images/srh_logo.png
 iplTeams.json
 main.qml
 notes.txt
-oldMain.qml
-yahoorssfeeds.json

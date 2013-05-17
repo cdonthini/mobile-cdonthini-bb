@@ -85,8 +85,6 @@ NavigationPane {
         },
         GroupDataModel {
             id: teamDataModel
-            grouping: ItemGrouping.None
-
         },
         DataSource {
             id: teamDataSource
@@ -109,6 +107,7 @@ NavigationPane {
                     layout: DockLayout {
                     }
                     Container {
+                        verticalAlignment: VerticalAlignment.Bottom
                         Container {
                             horizontalAlignment: HorizontalAlignment.Center
                             layout: DockLayout {
@@ -135,7 +134,6 @@ NavigationPane {
                                 var newsItem = teamDataModel.data(indexPath);
                                 var page = newsPage.createObject();
                                 page.htmlContent = newsItem.guid;
-                                //page.htmlTitle = newsItem.description;
                                 mainNavi.push(page);
                             }
                         } //listview - list
