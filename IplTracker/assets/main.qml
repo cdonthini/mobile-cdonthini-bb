@@ -86,6 +86,7 @@ NavigationPane {
         GroupDataModel {
             id: teamDataModel
             grouping: ItemGrouping.None
+
         },
         DataSource {
             id: teamDataSource
