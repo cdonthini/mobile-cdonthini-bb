@@ -85,6 +85,9 @@ NavigationPane {
         },
         GroupDataModel {
             id: teamDataModel
+            grouping: ItemGrouping.None
+            sortedAscending: false
+
         },
         DataSource {
             id: teamDataSource
@@ -135,6 +138,10 @@ NavigationPane {
                                 var page = newsPage.createObject();
                                 page.htmlContent = newsItem.guid;
                                 mainNavi.push(page);
+                            }
+                            layout: StackListLayout {
+                                orientation: LayoutOrientation.BottomToTop
+
                             }
                         } //listview - list
                     } //Container - title n list
