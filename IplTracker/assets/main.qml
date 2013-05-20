@@ -85,6 +85,7 @@ NavigationPane {
         GroupDataModel {
             id: teamDataModel
             grouping: ItemGrouping.None
+            sortedAscending: false
         },
         DataSource {
             id: teamDataSource
@@ -117,7 +118,7 @@ NavigationPane {
                                 textStyle.textAlign: TextAlign.Center
                                 textStyle.fontSize: FontSize.Medium
                             }
-                        }
+                        }// title of the team news page
                         ListView {
                             dataModel: teamDataModel
                             listItemComponents: [
@@ -135,6 +136,10 @@ NavigationPane {
                                 page.htmlContent = newsItem.guid;
                                 //page.htmlContent = "http://www.espncricinfo.com/indian-premier-league-2013/content/story/635879.html";
                                 mainNavi.push(page);
+                            }
+                            layout: StackListLayout {
+                                orientation: LayoutOrientation.BottomToTop
+
                             }
                         } //listview - list
                     } //Container - title n list
