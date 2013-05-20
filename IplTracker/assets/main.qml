@@ -150,13 +150,41 @@ NavigationPane {
             id: newsPage
             Page {
                 property alias htmlContent: newsView.url
+                actions:[
+                    ActionItem {
+                        id: next
+                        title: qsTr("Next Article")
+                        onTriggered: {
+                            newsView.url = "http://www.google.com"
+                        }
+                    }
+                ]
                 Container {
                     layout: DockLayout {
                     }
                     ScrollView {
+                        id: scrollView
+
+                        scrollViewProperties {
+                            scrollMode: ScrollMode.Both
+                            minContentScale: 0.5
+                            maxContentScale: 3.0
+                            pinchToZoomEnabled: true
+                            overScrollEffectMode: OverScrollEffectMode.OnPinch
+                            initialScalingMethod: ScalingMethod.AspectFill
+                        }
                         WebView {
                             id: newsView
                             settings.activeTextEnabled: true
+                            onMinContentScaleChanged: {
+                                scrollView.scrollViewProperties.minContentScale = minContentScale;
+                            }
+
+                            onMaxContentScaleChanged: {
+                                scrollView.scrollViewProperties.maxContentScale = maxContentScale;
+                            }
+                            settings.zoomToFitEnabled: true
+
                         }
                     }
                 }

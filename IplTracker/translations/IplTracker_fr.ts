@@ -20,6 +20,14 @@
     </message>
 </context>
 <context>
+    <name>main</name>
+    <message>
+        <location filename="../assets/main.qml" line="156"/>
+        <source>Next Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>oldMain</name>
     <message>
         <location filename="../assets/oldMain.qml" line="39"/>
