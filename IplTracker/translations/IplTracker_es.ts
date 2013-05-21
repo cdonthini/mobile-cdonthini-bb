@@ -22,8 +22,8 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../assets/main.qml" line="156"/>
-        <source>Next Article</source>
+        <location filename="../assets/main.qml" line="155"/>
+        <source>Cricinfo Home</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

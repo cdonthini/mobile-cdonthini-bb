@@ -134,7 +134,6 @@ NavigationPane {
                                 var newsItem = teamDataModel.data(indexPath);
                                 var page = newsPage.createObject();
                                 page.htmlContent = newsItem.guid;
-                                //page.htmlContent = "http://www.espncricinfo.com/indian-premier-league-2013/content/story/635879.html";
                                 mainNavi.push(page);
                             }
                             layout: StackListLayout {
@@ -153,9 +152,9 @@ NavigationPane {
                 actions:[
                     ActionItem {
                         id: next
-                        title: qsTr("Next Article")
+                        title: qsTr("Cricinfo Home")
                         onTriggered: {
-                            newsView.url = "http://www.google.com"
+                            newsView.url = "http://www.cricinfo.com"
                         }
                     }
                 ]
