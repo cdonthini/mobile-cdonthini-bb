@@ -66,9 +66,7 @@ NavigationPane {
     attachedObjects: [
         GroupDataModel {
             id: teamsDataModel
-            sortingKeys: [
-                "order"
-            ]
+            sortingKeys: [ "order" ]
             grouping: ItemGrouping.None
         },
         DataSource {
@@ -118,7 +116,7 @@ NavigationPane {
                                 textStyle.textAlign: TextAlign.Center
                                 textStyle.fontSize: FontSize.Medium
                             }
-                        }// title of the team news page
+                        } // title of the team news page
                         ListView {
                             dataModel: teamDataModel
                             listItemComponents: [
@@ -149,7 +147,7 @@ NavigationPane {
             id: newsPage
             Page {
                 property alias htmlContent: newsView.url
-                actions:[
+                actions: [
                     ActionItem {
                         id: next
                         title: qsTr("Cricinfo Home")
