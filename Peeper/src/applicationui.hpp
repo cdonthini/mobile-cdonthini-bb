@@ -3,6 +3,7 @@
 #define ApplicationUI_HPP_
 
 #include <QObject>
+#include <bb/data/SqlConnection>
 
 namespace bb { namespace cascades { class Application; }}
 
@@ -17,6 +18,9 @@ class ApplicationUI : public QObject
 public:
     ApplicationUI(bb::cascades::Application *app);
     virtual ~ApplicationUI() {}
+private:
+    // The connection to the SQL database
+    bb::data::SqlConnection* m_sqlConnection;
 };
 
 
