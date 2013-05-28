@@ -21,6 +21,7 @@ public:
 private:
     // The connection to the SQL database
     bb::data::SqlConnection* m_sqlConnection;
+    bool initDatabase();
 };
 
 
