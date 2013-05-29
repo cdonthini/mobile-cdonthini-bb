@@ -25,7 +25,8 @@ Page {
             horizontalAlignment: HorizontalAlignment.Center
             verticalAlignment: VerticalAlignment.Center
             onClicked: {
-                // show detail page when the button is clicked
+                homePage.dbOpen = _app.initDatabase();
+                // show Add page when the button is clicked
                 var page = getAddPage();
                 mainNavi.push(page);
             }
@@ -34,6 +35,7 @@ Page {
                 if (! addPage) {
                     addPage = addPageDefinition.createObject();
                     addPage.nav = mainNavi;
+                    addPage.dbOpen = dbOpen;
                 }
                 return addPage;
             }

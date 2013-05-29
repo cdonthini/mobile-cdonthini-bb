@@ -17,11 +17,13 @@ class ApplicationUI : public QObject
     Q_OBJECT
 public:
     ApplicationUI(bb::cascades::Application *app);
+    Q_INVOKABLE bool initDatabase();
     virtual ~ApplicationUI() {}
 private:
+    void alert(const QString &message);
     // The connection to the SQL database
     bb::data::SqlConnection* m_sqlConnection;
-    bool initDatabase();
+
 };
 
 

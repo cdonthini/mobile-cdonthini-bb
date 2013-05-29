@@ -82,7 +82,11 @@ Page {
     }
     Container {
         Label {
-            text: qsTr("Add")
+            text: {
+                if (dbOpen) {
+                    "db is open"
+                } else "db is closed";
+            }
             textStyle.fontWeight: FontWeight.W900
         }
         Divider {
