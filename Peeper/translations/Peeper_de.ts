@@ -4,27 +4,32 @@
 <context>
     <name>ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="38"/>
+        <location filename="../src/applicationui.cpp" line="37"/>
         <source>Error opening connection to db</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="48"/>
+        <location filename="../src/applicationui.cpp" line="46"/>
         <source>Drop table error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="61"/>
+        <location filename="../src/applicationui.cpp" line="59"/>
         <source>Error in creating table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="73"/>
+        <location filename="../src/applicationui.cpp" line="71"/>
+        <source>Need to enter something in all bro!:)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/applicationui.cpp" line="83"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="74"/>
+        <location filename="../src/applicationui.cpp" line="84"/>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>

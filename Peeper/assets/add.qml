@@ -112,6 +112,8 @@ Page {
             id: addButton
             text: qsTr("Add Account")
             onClicked: {
+                
+                _app.createRecord(title.text,username.text,password.text);
                 var page = getAddAccessPage();
                 nav.push(page);
             }
