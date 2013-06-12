@@ -14,21 +14,22 @@ class Account: public QObject {
 
 	Q_OBJECT
 
-	Q_PROPERTY(QString accountID READ accountID WRITE setAccountID NOTIFY acountIDChanged FINAL)
-	Q_PROPERTY(QString accountName READ accountName WRITE setAccountName NOTIFY accountNameChanged FINAL)
-	Q_PROPERTY(QString userName READ userName WRITE setUserName NOTIFY userNameChanged FINAL)
-	Q_PROPERTY(QString passWord READ passWord WRITE setPassWord NOTIFY passWordChanged FINAL)
+	Q_PROPERTY(QString accountID READ getAccountID WRITE setAccountID NOTIFY accountIDChanged FINAL)
+	Q_PROPERTY(QString accountName READ getAccountName WRITE setAccountName NOTIFY accountNameChanged FINAL)
+	Q_PROPERTY(QString userName READ getUserName WRITE setUserName NOTIFY userNameChanged FINAL)
+	Q_PROPERTY(QString passWord READ getPassWord WRITE setPassWord NOTIFY passWordChanged FINAL)
 
 public:
-	Account(const QString &accountID, const QString &accountName,
-			const QString &userName, const QString passWord, QObject *parent = 0);
-	Account(QObject *parent = 0);
-	virtual ~Account();
 
-	QString getAccountID();
-	QString getAccountName();
-	QString getUserName();
-	QString getPassWord();
+	Account(QObject *parent = 0);
+	Account(const QString &accountID, const QString &accountName,
+				const QString &userName, const QString &passWord, QObject *parent = 0);
+
+
+	QString getAccountID() const;
+	QString getAccountName() const;
+	QString getUserName() const;
+	QString getPassWord() const;
 
 	void setAccountID(const QString &accountID);
 	void setAccountName(const QString &accountName);
@@ -36,10 +37,10 @@ public:
 	void setPassWord(const QString &passWord);
 
 Q_SIGNALS:
-	void accountIDChanged(const QString &accountID);
-	void accountNameChanged(const QString &accountName);
-	void userNameChanged(const QString &userName);
-	void passWordChanged(const QString &passWord);
+	void accountIDChanged(const QString &accountiD);
+	void accountNameChanged(const QString &accountname);
+	void userNameChanged(const QString &username);
+	void passWordChanged(const QString &password);
 
 private:
 	QString A_accountID;

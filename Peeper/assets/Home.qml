@@ -4,19 +4,26 @@ Page {
     id: homePage
     property bool dbOpen: false
     actionBarVisibility: ChromeVisibility.Hidden
+    
     Container {
+        
         layout: StackLayout {
 
         }
         Label {
-            text: qsTr("Password Keeper")
+            //text: qsTr("Password Keeper")
+            text: _app.check()
             textStyle.base: SystemDefaults.TextStyles.BigText
             verticalAlignment: VerticalAlignment.Center
             horizontalAlignment: HorizontalAlignment.Center
         }
+        
         Divider {
 
         }
+        
+        signal createdDB(bool dbOpen)
+        
         Button {
             id: addButton
             text: qsTr("Add")
@@ -24,8 +31,14 @@ Page {
             bottomMargin: 50.0
             horizontalAlignment: HorizontalAlignment.Center
             verticalAlignment: VerticalAlignment.Center
+            
             onClicked: {
-                homePage.dbOpen = _app.initDatabase();
+                if(!homePage.dbOpen || !_app.check()){
+                	homePage.dbOpen = _app.initDatabase();
+                }
+                onCreatedDB : {
+                    _app.onCreatedDB(dbOpen);
+                }
                 // show Add page when the button is clicked
                 var page = getAddPage();
                 mainNavi.push(page);
@@ -35,7 +48,7 @@ Page {
                 if (! addPage) {
                     addPage = addPageDefinition.createObject();
                     addPage.nav = mainNavi;
-                    addPage.dbOpen = dbOpen;
+                    addPage.dbOpen = _app.check();
                 }
                 return addPage;
             }
@@ -55,6 +68,7 @@ Page {
             horizontalAlignment: HorizontalAlignment.Center
             verticalAlignment: VerticalAlignment.Center
             onClicked: {
+                _app.readRecords();
                 // show detail page when the button is clicked
                 var page = getAccessPage();
                 mainNavi.push(page);
@@ -64,6 +78,7 @@ Page {
                 if (! accessPage) {
                     accessPage = accessPageDefinition.createObject();
                     accessPage.nav = mainNavi;
+                    accessPage.dbOpen = dbOpen;
                 }
                 return accessPage;
             }

@@ -11,46 +11,42 @@ Account::Account(QObject *parent) : QObject(parent){
 
 }
 Account::Account(const QString &accountID, const QString &accountName,
-		const QString &userName, const QString passWord, QObject *parent) :
-		QObject(parent) {
-	A_accountID = accountID;
-	A_accountName = accountName;
-	A_userName = userName;
-	A_passWord = passWord;
+		const QString &userName, const QString &passWord, QObject *parent) :
+		QObject(parent),
+	A_accountID(accountID),
+	A_accountName(accountName),
+	A_userName(userName),
+	A_passWord(passWord)
+	{
 }
 
-QString Account::getAccountID(){
+QString Account::getAccountID() const{
 	return A_accountID;
 }
-QString Account::getAccountName(){
+QString Account::getAccountName() const{
 	return A_accountName;
 }
-QString Account::getUserName(){
+QString Account::getUserName() const{
 	return A_userName;
 }
-QString Account::getPassWord(){
+QString Account::getPassWord() const{
 	return A_passWord;
 }
 
-void Account::setAccountID(const QString &accountID){
-	A_accountID = accountID;
-	emit accountIDChanged(accountID);
+void Account::setAccountID(const QString &newaccountID){
+	A_accountID = newaccountID;
+	emit accountIDChanged(newaccountID);
 }
-void Account::setAccountName(const QString &accountName){
-	A_accountName = accountName;
-	emit accountNameChanged(accountName);
+void Account::setAccountName(const QString &newaccountName){
+	A_accountName = newaccountName;
+	emit accountNameChanged(newaccountName);
 }
-void Account::setUserName(const QString &userName){
-	A_userName = userName;
-	emit userNameChanged(userName);
+void Account::setUserName(const QString &newuserName){
+	A_userName = newuserName;
+	emit userNameChanged(newuserName);
 }
-void Account::setPassWord(const QString &passWord){
-	A_passWord = passWord;
-	emit passWordChanged(passWord);
-}
-
-
-Account::~Account() {
-	// TODO Auto-generated destructor stub
+void Account::setPassWord(const QString &newpassWord){
+	A_passWord = newpassWord;
+	emit passWordChanged(newpassWord);
 }
 

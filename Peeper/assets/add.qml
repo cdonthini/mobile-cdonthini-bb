@@ -5,6 +5,7 @@ Page {
     property bool dbOpen
     actions: [
         ActionItem {
+            enabled: dbOpen
             id: linkAccess
             title: qsTr("Access")
             onTriggered: {
@@ -28,6 +29,7 @@ Page {
             ]
         },
         ActionItem {
+            enabled: dbOpen
             id: linkRemove
             title: qsTr("Remove")
             onTriggered: {
@@ -50,8 +52,6 @@ Page {
                 }
             ]
         }
-        
-
     ]
     actionBarVisibility: ChromeVisibility.Visible
     paneProperties: NavigationPaneProperties {
@@ -67,7 +67,7 @@ Page {
             function getHomePage() {
                 if (! homePage) {
                     homePage = homePageDefinition.createObject();
-
+                    homePage.dbOpen = true;
                 }
                 return homePage;
             }
@@ -78,7 +78,6 @@ Page {
                 }
             ]
         }
-
     }
     Container {
         Label {
@@ -106,6 +105,7 @@ Page {
         TextField {
             id: password
             hintText: qsTr("Password")
+            inputMode: TextFieldInputMode.Password
 
         }
         Button {
@@ -114,22 +114,40 @@ Page {
             onClicked: {
                 
                 _app.createRecord(title.text,username.text,password.text);
-                var page = getAddAccessPage();
+                
+//                var page = getAddAccessPage();
+//                nav.push(page);
+//            }
+//            property Page addAccessPage
+//            function getAddAccessPage() {
+//                if (!addAccessPage ) {
+//                    addAccessPage = addAccessPageDefinition.createObject();
+//                    addAccessPage.nav = nav;
+//                    addAccessPage.dbOpen = dbOpen;
+//                }
+//                return addAccessPage;
+//            }
+//            attachedObjects: [
+//                ComponentDefinition {
+//                    id: addAccessPageDefinition
+//                    source: "access.qml"
+//                }
+//            ]
+				var page = getAddHomePage();
                 nav.push(page);
             }
-            property Page addAccessPage
-            function getAddAccessPage() {
-                if (! addAccessPage) {
-                    addAccessPage = addAccessPageDefinition.createObject();
-                    addAccessPage.nav = nav;
-                    addAccessPage.dbOpen = dbOpen;
+            property Page homePage
+            function getAddHomePage() {
+                if (! homePage) {
+                    homePage = addHomePageDefinition.createObject();
+                    homePage.dbOpen = true;
                 }
-                return addAccessPage;
+                return homePage;
             }
             attachedObjects: [
                 ComponentDefinition {
-                    id: addAccessPageDefinition
-                    source: "access.qml"
+                    id: addHomePageDefinition
+                    source: "Home.qml"
                 }
             ]
             horizontalAlignment: HorizontalAlignment.Center

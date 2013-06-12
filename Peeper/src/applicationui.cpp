@@ -1,5 +1,6 @@
 // Default empty project template
 #include "applicationui.hpp"
+#include "Account.hpp"
 
 #include <bb/cascades/Application>
 #include <bb/cascades/QmlDocument>
@@ -14,24 +15,65 @@ using namespace bb::cascades;
 using namespace bb::system;
 using namespace bb::data;
 
+const char* const CityModel::mPeeperDatabase = "data/peeperDatabase.db";
+
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 		m_sqlConnection(0) {
 
+	QCoreApplication::setOrganizationName("DCK");
+	QCoreApplication::setApplicationName("Peeper");
+
+	dbOpenPublic = false;
 	A_dataModel = 0;
+	initDataModel();
 	// create scene document from main.qml asset
 	// set parent to created document to ensure it exists for the whole application lifetime
 	QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
 	qml->setContextProperty("_app", this);
 	// create root object for the UI
 	AbstractPane *mainNavi = qml->createRootObject<AbstractPane>();
-	db = QSqlDatabase::addDatabase("QSQLITE");
+	copyDBToDataFolder(mPeeperDatabase);
+	m_sqlConnection = new SqlConnection(mPeeperDatabase, this);
 
-	db.setDatabaseName("./data/peeperDatabase.db");
+	connect(m_sqlConnection, SIGNAL(reply(const bb::data::DataAccessReply&)),
+			this,
+			SLOT(onLoadAsyncResultData(const bb::data::DataAccessReply&)));
 	// set created root object as a scene
 	app->setScene(mainNavi);
 
 }
 
+ApplicationUI::~ApplicationUI() {
+	if(m_sqlConnection->isRunning()){
+		m_sqlConnection->stop();
+	}
+}
+
+bool ApplicationUI::copyDBToDataFolder(const QString databaseName) {
+	QString dataFolder = QDir::homePath();
+	QString newFileName = dataFolder + "/" + databaseName;
+	QFile newFile(newFileName);
+
+	if(!newFile.exists()){
+		QString appFolder(QDir::homePath());
+		appFolder.chop(4);
+		QString originalFileName = appFolder + "app/native/assets/sql/" + databaseName;
+		QFile originalFile(originalFileName);
+
+		if(originalFile.exists()) {
+			return originalFile.copy(newFileName);
+		} else {
+			alert(tr("failed to copy file db file doesnt exist."));
+			return true;
+		}
+
+	}
+	return true;
+}
+void ApplicationUI::onCreatedDB(bool dbOpen) {
+	dbOpenPublic = dbOpen;
+	check();
+}
 bool ApplicationUI::initDatabase() {
 
 	if (db.open() == false) {
@@ -63,17 +105,17 @@ bool ApplicationUI::initDatabase() {
 	}
 
 	return true;
+
 }
 
 bool ApplicationUI::createRecord(const QString &title, const QString &username,
 		const QString &password) {
 
-	if (title.trimmed().isEmpty() && username.trimmed().isEmpty()
-			&& password.trimmed().isEmpty()) {
+	if (password.isEmpty()) {
 		alert(tr("Need to enter something in all bro!:)"));
 		return false;
 	}
-
+	db = QSqlDatabase::database();
 	QSqlQuery query(db);
 
 	query.prepare("INSERT INTO accounts"
@@ -93,29 +135,50 @@ bool ApplicationUI::createRecord(const QString &title, const QString &username,
 		const QSqlError error = query.lastError();
 		alert(tr("Create record error: %1").arg(error.text()));
 	}
-
+	db.close();
 	return success;
 }
-void ApplicationUI::initDataModel(){
-	A_dataModel = new GroupDataModel(this);
+void ApplicationUI::initDataModel() {
+	A_dataModel = new bb::cascades::GroupDataModel(this);
 	A_dataModel->setSortingKeys(QStringList() << "accountName");
 	A_dataModel->setGrouping(ItemGrouping::None);
 }
-void ApplicationUI::readRecords(){
+void ApplicationUI::readRecords() {
+	db = QSqlDatabase::database();
+
 	QSqlQuery query(db);
+	const QString sqlQuery =
+			"SELECT accountID, accountName, userName, passWord FROM accounts";
 
-	const QString sqlQuery = "SELECT accountID, accountName, userName, passWord FROM accounts";
+	if (query.exec(sqlQuery)) {
+		const int accountIDField = query.record().indexOf("accountID");
+		const int accountNameField = query.record().indexOf("accountName");
+		const int userNameField = query.record().indexOf("userName");
+		const int passWordField = query.record().indexOf("passWord");
 
-	if(query.exec(sqlQuery)){
-//		const int accountIDField = query.record().indexOf("accountID");
-//		const int accountNameField = query.record().indexOf("accountName");
-//		const int userNameField = query.record().indexOf("userName");
-//		const int passWordField = query.record().indexOf("passWord");
+		A_dataModel->clear();
 
-		m_dataModel->clear();
+		int recordsRead = 0;
 
-
+		while (query.next()) {
+			Account *account = new Account(
+					query.value(accountIDField).toString(),
+					query.value(accountNameField).toString(),
+					query.value(userNameField).toString(),
+					query.value(passWordField).toString());
+			A_dataModel->insert(account);
+			recordsRead++;
+		}
+		if (recordsRead == 0) {
+			alert(tr("no records"));
+		}
+	} else {
+		alert(tr("reading failed"));
 	}
+}
+
+bb::cascades::GroupDataModel* ApplicationUI::dataModel() const {
+	return A_dataModel;
 }
 // -----------------------------------------------------------------------------------------------
 // Alert Dialog Box Functions
@@ -132,3 +195,7 @@ void ApplicationUI::alert(const QString &message) {
 	dialog->show();
 }
 
+bool ApplicationUI::check() {
+
+	return dbOpenPublic;
+}

@@ -1,6 +1,8 @@
 import bb.cascades 1.0
 
 Page {
+    id: accessPage
+
     property variant nav
     property bool dbOpen
     actions: [
@@ -66,7 +68,7 @@ Page {
             function getHomePage() {
                 if (! homePage) {
                     homePage = homePageDefinition.createObject();
-
+                    homePage.dbOpen = true;
                 }
                 return homePage;
             }
@@ -81,19 +83,39 @@ Page {
     }
     Container {
         Label {
-            
+          
+
             horizontalAlignment: HorizontalAlignment.Right
             verticalAlignment: VerticalAlignment.Bottom
-           text: {
-               if(dbOpen){
-                   "db is open"
-               }
-               else "db is closed";
-           }
+            text: {
+                if (dbOpen) {
+                    "db is open"
+                } else "db is closed";
+            }
         }
-       
-        
+        ListView {
+            dataModel: _app.dataModel
+            
+            listItemComponents: [
+                ListItemComponent {
+                    type: "item"
+                    StandardListItem {
+                        title: qsTr("%1 ").arg(ListItemData.accountName)
+                        description: qsTr("Unique Key: %1").arg(ListItemData.userName)
+                    }
+                }
+            ]
+        }
+
     }
-    
-    
+
+    titleBar: TitleBar {
+        id: check
+        title: qsTr("f")
+
+    }
+    onCreationCompleted: {
+    	check.title = _app.check();
+    	//_app.readRecords();
+    }
 }

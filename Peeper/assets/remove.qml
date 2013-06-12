@@ -84,7 +84,7 @@ Page {
     }
     Container {
         Label {
-            text: "Remove"
+            text: _app.check()
             textStyle.fontSize: FontSize.XXLarge
 
         }
