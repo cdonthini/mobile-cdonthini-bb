@@ -2,12 +2,10 @@
 import bb.cascades 1.0
 NavigationPane {
     id: mainNavi
-    property bool dbOpen: false
-    
-    onPopTransitionEnded: page.destroy();
 
-    // creates one page with a label
+    peekEnabled: false
     Home {
-        dbOpen: mainNavi.dbOpen
+        nav: mainNavi;
     }
+    
 }

@@ -15,7 +15,13 @@ using namespace bb::cascades;
 using namespace bb::system;
 using namespace bb::data;
 
-const char* const CityModel::mPeeperDatabase = "data/peeperDatabase.db";
+#define ADD_ACCOUNT 1
+#define READ_ACCOUNTS 2
+#define MODIFY_ACCOUNT 3
+#define REMOVE_ACCOUNT 4
+#define CHECK_PIN 5
+
+const char* const ApplicationUI::mPeeperDatabase = "peeperDatabase.db";
 
 ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 		m_sqlConnection(0) {
@@ -33,7 +39,7 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 	// create root object for the UI
 	AbstractPane *mainNavi = qml->createRootObject<AbstractPane>();
 	copyDBToDataFolder(mPeeperDatabase);
-	m_sqlConnection = new SqlConnection(mPeeperDatabase, this);
+	m_sqlConnection = new SqlConnection("data/peeperDatabase.db", this);
 
 	connect(m_sqlConnection, SIGNAL(reply(const bb::data::DataAccessReply&)),
 			this,
@@ -44,7 +50,7 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 }
 
 ApplicationUI::~ApplicationUI() {
-	if(m_sqlConnection->isRunning()){
+	if (m_sqlConnection->isRunning()) {
 		m_sqlConnection->stop();
 	}
 }
@@ -54,129 +60,104 @@ bool ApplicationUI::copyDBToDataFolder(const QString databaseName) {
 	QString newFileName = dataFolder + "/" + databaseName;
 	QFile newFile(newFileName);
 
-	if(!newFile.exists()){
+	if (!newFile.exists()) {
 		QString appFolder(QDir::homePath());
 		appFolder.chop(4);
-		QString originalFileName = appFolder + "app/native/assets/sql/" + databaseName;
+		QString originalFileName = appFolder + "app/native/assets/sql/"
+				+ databaseName;
 		QFile originalFile(originalFileName);
 
-		if(originalFile.exists()) {
+		if (originalFile.exists()) {
 			return originalFile.copy(newFileName);
 		} else {
-			alert(tr("failed to copy file db file doesnt exist."));
+			alert(
+					tr("failed to copy db file. It doesn't exist. %1").arg(
+							appFolder));
 			return true;
 		}
 
 	}
 	return true;
 }
-void ApplicationUI::onCreatedDB(bool dbOpen) {
-	dbOpenPublic = dbOpen;
-	check();
-}
-bool ApplicationUI::initDatabase() {
-
-	if (db.open() == false) {
-		const QSqlError error = db.lastError();
-		alert(tr("Error opening connection to db"));
-		return false;
-	}
-	QSqlQuery query(db);
-
-	if (query.exec("DROP TABLE IF EXISTS accounts")) {
-		qDebug() << "Table dropped";
-	} else {
-		const QSqlError error = query.lastError();
-		alert(tr("Drop table error"));
-
-	}
-	const QString createSQL = "CREATE TABLE accounts"
-			" (accountID INTEGER PRIMARY KEY AUTOINCREMENT, "
-			" accountName VARCHAR, "
-			" userName    VARCHAR, "
-			" passWord    VARCHAR);";
-
-	if (query.exec(createSQL)) {
-		qDebug() << "Table of accounts created.";
-	} else {
-		const QSqlError error = db.lastError();
-		alert(tr("Error in creating table"));
-		return false;
-	}
-
-	return true;
-
-}
 
 bool ApplicationUI::createRecord(const QString &title, const QString &username,
-		const QString &password) {
+		const QString &password, const QString &tag) {
 
 	if (password.isEmpty()) {
-		alert(tr("Need to enter something in all bro!:)"));
+		alert(tr("Need to enter something in all fields)"));
 		return false;
 	}
-	db = QSqlDatabase::database();
-	QSqlQuery query(db);
 
-	query.prepare("INSERT INTO accounts"
-			"	(accountName,userName,passWord) "
-			"	VALUES (:accountName, :userName, :passWord)");
-	query.bindValue(":accountName", title);
-	query.bindValue(":userName", username);
-	query.bindValue(":passWord", password);
+	QString query;
+
+	QTextStream(&query)
+			<< "INSERT INTO accounts (tag, accountName, userName, passWord) VALUES ('"
+			<< tag << "','" << title << "','" << username << "','" << password
+			<< "')";
+
+	DataAccessReply reply = m_sqlConnection->executeAndWait(query, ADD_ACCOUNT);
 
 	bool success = false;
-	if (query.exec()) {
-		alert(tr("Create record succeeded."));
-		success = true;
+	if (reply.hasError()) {
+		alert(tr("create record ERROR"));
+		success = false;
 	} else {
-		// If 'exec' fails, error information can be accessed via the lastError function
-		// the last error is reset every time exec is called.
-		const QSqlError error = query.lastError();
-		alert(tr("Create record error: %1").arg(error.text()));
+		success = true;
+		alert(tr("Created %1 account").arg(title));
 	}
-	db.close();
+
 	return success;
 }
 void ApplicationUI::initDataModel() {
 	A_dataModel = new bb::cascades::GroupDataModel(this);
-	A_dataModel->setSortingKeys(QStringList() << "accountName");
-	A_dataModel->setGrouping(ItemGrouping::None);
+	A_dataModel->setSortingKeys(QStringList() << "tag");
+	A_dataModel->setGrouping(ItemGrouping::ByFullValue);
 }
 void ApplicationUI::readRecords() {
-	db = QSqlDatabase::database();
+	A_dataModel->clear();
 
-	QSqlQuery query(db);
 	const QString sqlQuery =
-			"SELECT accountID, accountName, userName, passWord FROM accounts";
+			"SELECT pk, tag, accountName, userName, passWord FROM accounts";
+	DataAccessReply reply = m_sqlConnection->executeAndWait(sqlQuery,
+			READ_ACCOUNTS);
 
-	if (query.exec(sqlQuery)) {
-		const int accountIDField = query.record().indexOf("accountID");
-		const int accountNameField = query.record().indexOf("accountName");
-		const int userNameField = query.record().indexOf("userName");
-		const int passWordField = query.record().indexOf("passWord");
-
-		A_dataModel->clear();
-
-		int recordsRead = 0;
-
-		while (query.next()) {
-			Account *account = new Account(
-					query.value(accountIDField).toString(),
-					query.value(accountNameField).toString(),
-					query.value(userNameField).toString(),
-					query.value(passWordField).toString());
-			A_dataModel->insert(account);
-			recordsRead++;
-		}
-		if (recordsRead == 0) {
-			alert(tr("no records"));
-		}
+	if (reply.hasError()) {
+		alert(tr("reading records ERROR"));
 	} else {
-		alert(tr("reading failed"));
+		onLoadAsyncResultData(reply);
 	}
 }
+bool ApplicationUI::modify(const QString &title, const QString &username,
+		const QString &password, const QString &pk) {
+	QString sqlQueryModify;
 
+	QTextStream(&sqlQueryModify) << "UPDATE accounts set accountName ='"
+			<< title << "', userName='" << username << "', passWord ='"
+			<< password << "' where pk =" << pk;
+	DataAccessReply reply = m_sqlConnection->executeAndWait(sqlQueryModify,
+			MODIFY_ACCOUNT);
+	if (reply.hasError()) {
+		alert(tr("reading records ERROR"));
+	} else {
+		alert(tr("Account Updated."));
+		;
+	}
+	return true;
+}
+bool ApplicationUI::remove(const QString &pk) {
+	QString sqlQueryRemove;
+
+	QTextStream(&sqlQueryRemove) << "DELETE FROM accounts WHERE pk =" << pk;
+	DataAccessReply reply = m_sqlConnection->executeAndWait(sqlQueryRemove,
+			REMOVE_ACCOUNT);
+	if (reply.hasError()) {
+		alert(tr("reading records ERROR"));
+	} else {
+		alert(tr("Account Removed."));
+		;
+	}
+	return true;
+}
 bb::cascades::GroupDataModel* ApplicationUI::dataModel() const {
 	return A_dataModel;
 }
@@ -195,7 +176,49 @@ void ApplicationUI::alert(const QString &message) {
 	dialog->show();
 }
 
-bool ApplicationUI::check() {
+void ApplicationUI::onLoadAsyncResultData(
+		const bb::data::DataAccessReply& reply) {
+	if (reply.hasError()) {
+		alert(tr("Has error on loadAsync Method"));
+	} else {
+		if (reply.id() == READ_ACCOUNTS) {
+			QVariantList resultList = reply.result().value<QVariantList>();
+			if (resultList.size() > 0) {
+				dbOpenPublic = true;
+				A_dataModel->insertList(resultList);
 
-	return dbOpenPublic;
+			}
+		} else {
+			alert(tr("reply id is different"));
+		}
+	}
+}
+bool ApplicationUI::checkPIN(const QString &pin) {
+	QString query;
+	bool isCorrect = false;
+	QTextStream(&query) << "SELECT password FROM pw WHERE password =" << pin;
+	DataAccessReply reply = m_sqlConnection->executeAndWait(query, CHECK_PIN);
+
+	if (reply.hasError()) {
+		isCorrect = false;
+		alert(tr(" DB Error "));
+	} else if (reply.id() != CHECK_PIN) {
+		isCorrect = false;
+		alert(tr(" Wrong reply ID "));
+	} else {
+		QVariantList resultList = reply.result().value<QVariantList>();
+		if (resultList.size() > 0) {
+			return true;
+		} else {
+			isCorrect = false;
+			alert(tr(" Wrong PIN. Try Again! "));
+		}
+	}
+
+	return isCorrect;
+}
+bool ApplicationUI::createPIN(const QString &pin) {
+	QString query;
+	QTextStream(&query) << "SELECT * FROM pw" << pin;
+	return true;
 }

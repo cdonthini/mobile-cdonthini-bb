@@ -2,10 +2,11 @@ import bb.cascades 1.0
 
 Page {
     property variant nav
-    property bool dbOpen
+    
+    
     actions: [
         ActionItem {
-            enabled: dbOpen
+            
             id: linkAccess
             title: qsTr("Access")
             onTriggered: {
@@ -27,30 +28,6 @@ Page {
                     source: "access.qml"
                 }
             ]
-        },
-        ActionItem {
-            enabled: dbOpen
-            id: linkRemove
-            title: qsTr("Remove")
-            onTriggered: {
-                // show detail page when the button is clicked
-                var page = getRemovePage();
-                nav.push(page);
-            }
-            property Page removePage
-            function getRemovePage() {
-                if (! removePage) {
-                    removePage = removePageDefinition.createObject();
-                    removePage.nav = nav;
-                }
-                return removePage;
-            }
-            attachedObjects: [
-                ComponentDefinition {
-                    id: removePageDefinition
-                    source: "remove.qml"
-                }
-            ]
         }
     ]
     actionBarVisibility: ChromeVisibility.Visible
@@ -67,7 +44,7 @@ Page {
             function getHomePage() {
                 if (! homePage) {
                     homePage = homePageDefinition.createObject();
-                    homePage.dbOpen = true;
+                    
                 }
                 return homePage;
             }
@@ -79,15 +56,14 @@ Page {
             ]
         }
     }
+    titleBar: TitleBar {
+        
+        title: qsTr("Add Account")
+        visibility: ChromeVisibility.Visible
+
+    }
     Container {
-        Label {
-            text: {
-                if (dbOpen) {
-                    "db is open"
-                } else "db is closed";
-            }
-            textStyle.fontWeight: FontWeight.W900
-        }
+        
         Divider {
 
         }
@@ -106,41 +82,53 @@ Page {
             id: password
             hintText: qsTr("Password")
             inputMode: TextFieldInputMode.Password
+            input.submitKey: SubmitKey.Submit
+            input {
+                onSubmitted: {
+                    addButton.clicked();
+                }
+            }
+        }
+
+        DropDown {
+            id: tags
+            title: qsTr("Select a Tag")
+            horizontalAlignment: HorizontalAlignment.Center
+            Option {
+                text: qsTr("Emails")
+            }
+            Option {
+                text: qsTr("Bank Accounts")
+            }
+            Option {
+                text: qsTr("Work Accounts")
+            }
+            Option {
+                text: qsTr("Utilities")
+            }
+            Option {
+                text: qsTr("Social Accounts")
+            }
+            Option {
+                text: qsTr("Others")
+            }
 
         }
         Button {
             id: addButton
             text: qsTr("Add Account")
             onClicked: {
-                
-                _app.createRecord(title.text,username.text,password.text);
-                
-//                var page = getAddAccessPage();
-//                nav.push(page);
-//            }
-//            property Page addAccessPage
-//            function getAddAccessPage() {
-//                if (!addAccessPage ) {
-//                    addAccessPage = addAccessPageDefinition.createObject();
-//                    addAccessPage.nav = nav;
-//                    addAccessPage.dbOpen = dbOpen;
-//                }
-//                return addAccessPage;
-//            }
-//            attachedObjects: [
-//                ComponentDefinition {
-//                    id: addAccessPageDefinition
-//                    source: "access.qml"
-//                }
-//            ]
-				var page = getAddHomePage();
+
+                _app.createRecord(title.text, username.text, password.text, tags.selectedOption.text);
+
+                var page = getAddHomePage();
                 nav.push(page);
             }
             property Page homePage
             function getAddHomePage() {
                 if (! homePage) {
                     homePage = addHomePageDefinition.createObject();
-                    homePage.dbOpen = true;
+                    
                 }
                 return homePage;
             }
@@ -151,7 +139,7 @@ Page {
                 }
             ]
             horizontalAlignment: HorizontalAlignment.Center
-            topMargin: 20.0
+            topMargin: 45.0
 
         }
 

@@ -24,14 +24,16 @@ class ApplicationUI : public QObject
 
 public:
     ApplicationUI(bb::cascades::Application *app);
-    Q_INVOKABLE bool initDatabase();
-    Q_INVOKABLE bool createRecord(const QString &title , const QString &username, const QString &password);
-    Q_INVOKABLE void readRecords();
-    Q_INVOKABLE bool check();
-    ~ApplicationUI();
-public slots:
 
-	void onCreatedDB(bool dbOpen);
+    Q_INVOKABLE bool createRecord(const QString &title , const QString &username, const QString &password, const QString &tag);
+    Q_INVOKABLE bool modify(const QString &title , const QString &username, const QString &password, const QString &tag);
+    Q_INVOKABLE void readRecords();
+    Q_INVOKABLE bool remove(const QString &pk);
+    Q_INVOKABLE bool checkPIN(const QString &pin);
+    Q_INVOKABLE bool createPIN(const QString &pin);
+    Q_INVOKABLE bool dbOpenPublic;
+    ~ApplicationUI();
+
 
 private slots:
 
@@ -43,7 +45,7 @@ private:
     bb::cascades::GroupDataModel* dataModel() const;
     bb::cascades::GroupDataModel* A_dataModel;
     QSqlDatabase db;
-    bool dbOpenPublic;
+
     void alert(const QString &message);
     // The connection to the SQL database
     bb::data::SqlConnection* m_sqlConnection;

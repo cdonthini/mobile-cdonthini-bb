@@ -2,43 +2,36 @@ import bb.cascades 1.0
 
 Page {
     id: homePage
-    property bool dbOpen: false
+    property variant nav
     actionBarVisibility: ChromeVisibility.Hidden
-    
+
     Container {
-        
+
         layout: StackLayout {
 
         }
         Label {
-            //text: qsTr("Password Keeper")
-            text: _app.check()
+            text: qsTr("Password Keeper")
+
             textStyle.base: SystemDefaults.TextStyles.BigText
             verticalAlignment: VerticalAlignment.Center
             horizontalAlignment: HorizontalAlignment.Center
         }
-        
+
         Divider {
 
         }
-        
-        signal createdDB(bool dbOpen)
-        
+
         Button {
             id: addButton
             text: qsTr("Add")
-            topMargin: 50.0
+            topMargin: 100.0
             bottomMargin: 50.0
             horizontalAlignment: HorizontalAlignment.Center
             verticalAlignment: VerticalAlignment.Center
-            
+
             onClicked: {
-                if(!homePage.dbOpen || !_app.check()){
-                	homePage.dbOpen = _app.initDatabase();
-                }
-                onCreatedDB : {
-                    _app.onCreatedDB(dbOpen);
-                }
+
                 // show Add page when the button is clicked
                 var page = getAddPage();
                 mainNavi.push(page);
@@ -48,7 +41,7 @@ Page {
                 if (! addPage) {
                     addPage = addPageDefinition.createObject();
                     addPage.nav = mainNavi;
-                    addPage.dbOpen = _app.check();
+                    
                 }
                 return addPage;
             }
@@ -58,11 +51,14 @@ Page {
                     source: "add.qml"
                 }
             ]
+            imageSource: "//assets/png/ic_add.png"
+
         }
         Button {
+            imageSource: "//assets/png/ic_view_list.png"
             id: accessButton
             text: qsTr("Access")
-            enabled: dbOpen
+            enabled: _app.dbOpenPublic
             topMargin: 50.0
             bottomMargin: 50.0
             horizontalAlignment: HorizontalAlignment.Center
@@ -78,7 +74,7 @@ Page {
                 if (! accessPage) {
                     accessPage = accessPageDefinition.createObject();
                     accessPage.nav = mainNavi;
-                    accessPage.dbOpen = dbOpen;
+                    
                 }
                 return accessPage;
             }
@@ -89,34 +85,6 @@ Page {
                 }
             ]
         }
-        Button {
-            id: removeButton
-            topMargin: 50.0
-            bottomMargin: 50.0
-            horizontalAlignment: HorizontalAlignment.Center
-            verticalAlignment: VerticalAlignment.Center
-            text: qsTr("Remove")
-            enabled: dbOpen
-            onClicked: {
-                // show detail page when the button is clicked
-                var page = getRemovePage();
-                mainNavi.push(page);
-            }
-            property Page removePage
-            function getRemovePage() {
-                if (! removePage) {
-                    removePage = removePageDefinition.createObject();
-                    removePage.nav = mainNavi;
-                }
-                return removePage;
-            }
-            attachedObjects: [
-                ComponentDefinition {
-                    id: removePageDefinition
-                    source: "remove.qml"
-                }
-            ]
-        }
-
+        
     }
 }
