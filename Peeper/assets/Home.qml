@@ -34,14 +34,14 @@ Page {
 
                 // show Add page when the button is clicked
                 var page = getAddPage();
-                mainNavi.push(page);
+                nav.push(page);
             }
             property Page addPage
             function getAddPage() {
                 if (! addPage) {
                     addPage = addPageDefinition.createObject();
-                    addPage.nav = mainNavi;
-                    
+                    addPage.nav = nav;
+
                 }
                 return addPage;
             }
@@ -67,14 +67,14 @@ Page {
                 _app.readRecords();
                 // show detail page when the button is clicked
                 var page = getAccessPage();
-                mainNavi.push(page);
+                nav.push(page);
             }
             property Page accessPage
             function getAccessPage() {
                 if (! accessPage) {
                     accessPage = accessPageDefinition.createObject();
-                    accessPage.nav = mainNavi;
-                    
+                    accessPage.nav = nav;
+
                 }
                 return accessPage;
             }
@@ -85,6 +85,20 @@ Page {
                 }
             ]
         }
-        
+        Container {
+            layout: DockLayout {
+
+            }
+            horizontalAlignment: HorizontalAlignment.Center
+            ImageView {
+                
+                imageSource: "asset:///png/setupCover.png"
+                loadEffect: ImageViewLoadEffect.FadeZoom
+                preferredHeight: 400.0
+                preferredWidth: 600.0
+
+            }
+        }
+
     }
 }

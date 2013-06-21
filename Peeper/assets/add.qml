@@ -11,6 +11,7 @@ Page {
             title: qsTr("Access")
             onTriggered: {
                 // show detail page when the button is clicked
+                _app.readRecords();
                 var page = getAccessPage();
                 nav.push(page);
             }
@@ -44,7 +45,7 @@ Page {
             function getHomePage() {
                 if (! homePage) {
                     homePage = homePageDefinition.createObject();
-                    
+                    homePage.nav = nav;
                 }
                 return homePage;
             }
@@ -85,7 +86,7 @@ Page {
             input.submitKey: SubmitKey.Submit
             input {
                 onSubmitted: {
-                    addButton.clicked();
+                    tags.expanded();
                 }
             }
         }
@@ -95,7 +96,7 @@ Page {
             title: qsTr("Select a Tag")
             horizontalAlignment: HorizontalAlignment.Center
             Option {
-                text: qsTr("Emails")
+                text: qsTr("Email Accounts")
             }
             Option {
                 text: qsTr("Bank Accounts")
@@ -104,13 +105,13 @@ Page {
                 text: qsTr("Work Accounts")
             }
             Option {
-                text: qsTr("Utilities")
+                text: qsTr("Utility Accounts")
             }
             Option {
                 text: qsTr("Social Accounts")
             }
             Option {
-                text: qsTr("Others")
+                text: qsTr("Other Accounts")
             }
 
         }
@@ -128,7 +129,7 @@ Page {
             function getAddHomePage() {
                 if (! homePage) {
                     homePage = addHomePageDefinition.createObject();
-                    
+                    homePage.nav = nav;
                 }
                 return homePage;
             }

@@ -4,75 +4,87 @@
 <context>
     <name>ApplicationUI</name>
     <message>
-        <location filename="../src/applicationui.cpp" line="74"/>
+        <location filename="../src/applicationui.cpp" line="98"/>
         <source>failed to copy db file. It doesn&apos;t exist. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="87"/>
+        <location filename="../src/applicationui.cpp" line="111"/>
         <source>Need to enter something in all fields)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="102"/>
+        <location filename="../src/applicationui.cpp" line="126"/>
         <source>create record ERROR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="106"/>
+        <location filename="../src/applicationui.cpp" line="130"/>
         <source>Created %1 account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="125"/>
-        <location filename="../src/applicationui.cpp" line="140"/>
-        <location filename="../src/applicationui.cpp" line="154"/>
+        <location filename="../src/applicationui.cpp" line="149"/>
+        <location filename="../src/applicationui.cpp" line="164"/>
+        <location filename="../src/applicationui.cpp" line="178"/>
         <source>reading records ERROR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="142"/>
+        <location filename="../src/applicationui.cpp" line="166"/>
         <source>Account Updated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="156"/>
+        <location filename="../src/applicationui.cpp" line="180"/>
         <source>Account Removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="168"/>
+        <location filename="../src/applicationui.cpp" line="192"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="169"/>
+        <location filename="../src/applicationui.cpp" line="193"/>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="182"/>
+        <location filename="../src/applicationui.cpp" line="206"/>
         <source>Has error on loadAsync Method</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="192"/>
+        <location filename="../src/applicationui.cpp" line="216"/>
         <source>reply id is different</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="204"/>
+        <location filename="../src/applicationui.cpp" line="228"/>
+        <location filename="../src/applicationui.cpp" line="268"/>
         <source> DB Error </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="207"/>
+        <location filename="../src/applicationui.cpp" line="231"/>
+        <location filename="../src/applicationui.cpp" line="271"/>
         <source> Wrong reply ID </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/applicationui.cpp" line="214"/>
+        <location filename="../src/applicationui.cpp" line="238"/>
         <source> Wrong PIN. Try Again! </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/applicationui.cpp" line="249"/>
+        <source>Peep ID should only contain numbers. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/applicationui.cpp" line="257"/>
+        <source>Pin Not properly entered. Only numbers please.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -95,6 +107,52 @@
     </message>
 </context>
 <context>
+    <name>Password</name>
+    <message>
+        <location filename="../assets/Password.qml" line="15"/>
+        <source>Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/Password.qml" line="26"/>
+        <source>Enter Pin to view your Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/Password.qml" line="39"/>
+        <source>Pin here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/Password.qml" line="52"/>
+        <source>Submit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Setup</name>
+    <message>
+        <location filename="../assets/Setup.qml" line="34"/>
+        <source>Enter a Peep ID comprised of digits to be used to access the app and view passwords to the stored accounts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/Setup.qml" line="47"/>
+        <source>Numeric Peep ID ###</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/Setup.qml" line="57"/>
+        <source>Re-enter Numeric Peep ID ###</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/Setup.qml" line="125"/>
+        <source>Password Keeper</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>access</name>
     <message>
         <location filename="../assets/access.qml" line="11"/>
@@ -107,22 +165,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/access.qml" line="75"/>
-        <source>User name: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/access.qml" line="82"/>
-        <source>Edit Account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/access.qml" line="105"/>
-        <source>Remove Account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/access.qml" line="138"/>
+        <location filename="../assets/access.qml" line="122"/>
         <source>Accounts List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -135,144 +178,111 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="37"/>
+        <location filename="../assets/add.qml" line="38"/>
         <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="72"/>
+        <location filename="../assets/add.qml" line="73"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="77"/>
+        <location filename="../assets/add.qml" line="78"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="83"/>
+        <location filename="../assets/add.qml" line="84"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="95"/>
+        <location filename="../assets/add.qml" line="96"/>
         <source>Select a Tag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="98"/>
-        <source>Emails</source>
+        <location filename="../assets/add.qml" line="99"/>
+        <source>Email Accounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="101"/>
+        <location filename="../assets/add.qml" line="108"/>
+        <source>Utility Accounts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/add.qml" line="114"/>
+        <source>Other Accounts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../assets/add.qml" line="102"/>
         <source>Bank Accounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="104"/>
+        <location filename="../assets/add.qml" line="105"/>
         <source>Work Accounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="107"/>
-        <source>Utilities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/add.qml" line="110"/>
+        <location filename="../assets/add.qml" line="111"/>
         <source>Social Accounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="113"/>
-        <source>Others</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/add.qml" line="61"/>
-        <location filename="../assets/add.qml" line="119"/>
+        <location filename="../assets/add.qml" line="62"/>
+        <location filename="../assets/add.qml" line="120"/>
         <source>Add Account</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>password</name>
-    <message>
-        <location filename="../assets/password.qml" line="16"/>
-        <source>Pin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/password.qml" line="27"/>
-        <source>Enter Pin to view your Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/password.qml" line="41"/>
-        <source>Pin here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/password.qml" line="55"/>
-        <source>Submit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>pwpage</name>
     <message>
-        <location filename="../assets/pwpage.qml" line="17"/>
+        <location filename="../assets/pwpage.qml" line="16"/>
         <source>Account Details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pwpage.qml" line="35"/>
+        <location filename="../assets/pwpage.qml" line="33"/>
         <source>Your Account name Here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pwpage.qml" line="40"/>
+        <location filename="../assets/pwpage.qml" line="42"/>
         <source>User name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pwpage.qml" line="47"/>
+        <location filename="../assets/pwpage.qml" line="46"/>
         <source>Your Username Here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pwpage.qml" line="51"/>
+        <location filename="../assets/pwpage.qml" line="53"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pwpage.qml" line="56"/>
+        <location filename="../assets/pwpage.qml" line="60"/>
         <source>Your Password Here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pwpage.qml" line="69"/>
+        <location filename="../assets/pwpage.qml" line="73"/>
         <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pwpage.qml" line="71"/>
-        <source>Edit Account</source>
+        <location filename="../assets/pwpage.qml" line="112"/>
+        <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/pwpage.qml" line="73"/>
-        <source>Remove Account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/pwpage.qml" line="105"/>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/pwpage.qml" line="133"/>
+        <location filename="../assets/pwpage.qml" line="139"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>

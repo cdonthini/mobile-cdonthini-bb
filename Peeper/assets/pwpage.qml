@@ -1,16 +1,15 @@
 import bb.cascades 1.0
 
 Page {
-    
+
     id: passwordPage
     property variant nav
-    property variant accountName
-    property variant userName
-    property variant passWord
+    property alias accountName : anText.text
+    property alias userName : unText.text
+    property alias passWord : pwText.text
     property variant tag
     property variant pk
     property int path
-
 
     titleBar: TitleBar {
         id: check
@@ -31,9 +30,12 @@ Page {
         }
         TextField {
             id: anText
-            text: accountName
             hintText: qsTr("Your Account name Here")
             inputMode: TextFieldInputMode.Text
+            
+            onTextChanging: {
+                editB.enabled = true;
+            }
 
         }
         Label {
@@ -41,10 +43,10 @@ Page {
         }
         TextField {
             id: unText
-            text: {
-                userName
-            }
             hintText: qsTr("Your Username Here")
+            onTextChanging: {
+                editB.enabled = true;
+            }
             inputMode: TextFieldInputMode.EmailAddress
         }
         Label {
@@ -52,7 +54,9 @@ Page {
         }
         TextField {
             id: pwText
-            text: passWord
+            onTextChanging: {
+                editB.enabled = true;
+            }
             hintText: qsTr("Your Password Here")
             inputMode: TextFieldInputMode.Password
         }
@@ -65,24 +69,24 @@ Page {
             horizontalAlignment: HorizontalAlignment.Center
             topMargin: 25.0
             text: {
-                if (path == 0) {
-                    qsTr("Home")
-                } else if (path == 1) {
-                    qsTr("Edit Account")
-                } else if (path == 2) {
-                    qsTr("Remove Account")
-                }
+//                if (path == 0) {
+                   qsTr("Home")
+//                } else if (path == 1) {
+//                    qsTr("Edit Account")
+//                } else if (path == 2) {
+//                    qsTr("Remove Account")
+//                }
             }
 
             onClicked: {
                 var page = getHomePage();
-                push(page);
+                nav.push(page);
             }
             property Page homePage
             function getHomePage() {
                 if (! homePage) {
                     homePage = homePageDefinition.createObject();
-
+                    homePage.nav = nav;
                 }
                 return homePage;
             }
@@ -95,20 +99,21 @@ Page {
         }
 
         Container {
-            layout: AbsoluteLayout {
+            layout: StackLayout {
+                orientation: LayoutOrientation.LeftToRight
 
             }
 
+            horizontalAlignment: HorizontalAlignment.Center
             Button {
                 imageSource: "//assets/png/ic_edit.png"
                 id: editB
-                text: qsTr("Edit")
-                layoutProperties: AbsoluteLayoutProperties {
-                    positionX: 40
-                    positionY: 0
-                }
+                enabled: false
+                text: qsTr("Update")
+
                 onClicked: {
-                    _app.modify(anText.text, unText.text, pwText.text, pk)
+                    _app.modify(anText.text, unText.text, pwText.text, pk);
+                    _app.readRecords();
                     var page = getAccessPage();
                     nav.push(page);
                 }
@@ -116,7 +121,7 @@ Page {
                 function getAccessPage() {
                     if (! accessPage) {
                         accessPage = accessPageDefinitionEdit.createObject();
-                        
+                        accessPage.nav = nav;
                     }
                     return accessPage;
                 }
@@ -126,17 +131,16 @@ Page {
                         source: "access.qml"
                     }
                 ]
+               
 
             }
             Button {
-                
+
                 text: qsTr("Remove")
-                layoutProperties: AbsoluteLayoutProperties {
-                    positionX: 400
-                    positionY: 0
-                }
+
                 onClicked: {
-                    _app.remove(pk)
+                    _app.remove(pk);
+                    _app.readRecords();
                     var page = getAccessPage();
                     nav.push(page);
                 }
@@ -144,7 +148,7 @@ Page {
                 function getAccessPage() {
                     if (! accessPage) {
                         accessPage = accessPageDefinitionRemove.createObject();
-                        
+                        accessPage.nav = nav;
                     }
                     return accessPage;
                 }

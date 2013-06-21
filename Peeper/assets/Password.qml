@@ -9,15 +9,14 @@ Page {
     property variant tag
     property variant pk
     property int path
-    
-    
+
     titleBar: TitleBar {
         id: check
         title: qsTr("Pin")
         visibility: ChromeVisibility.Visible
 
     }
-    
+
     Container {
         layoutProperties: StackLayoutProperties {
 
@@ -36,16 +35,14 @@ Page {
             id: enteredPIN
             inputMode: TextFieldInputMode.NumericPassword
             input.submitKey: SubmitKey.Submit
-            editor.cursorPosition: 0
             topMargin: 50.0
             hintText: qsTr("Pin here")
-
             focusHighlightEnabled: true
             input {
-               onSubmitted: {
-                   submitButton.clicked();
-               }
-           }
+                onSubmitted: {
+                    submitButton.clicked();
+                }
+            }
 
         }
 
@@ -56,14 +53,14 @@ Page {
             horizontalAlignment: HorizontalAlignment.Center
             minWidth: 500.0
             minHeight: 50.0
-            onClicked: {                
-                
+            onClicked: {
+
                 var page = getPwPage();
-                mainNavi.push(page);
+                nav.push(page);
             }
             property Page pwPage
             function getPwPage() {
-                if (!pwPage && _app.checkPIN(enteredPIN.text)) {
+                if (! pwPage && _app.checkPIN(enteredPIN.text) && path == 786) {
                     _app.readRecords();
                     pwPage = pwPageDefinition.createObject();
                     pwPage.accountName = accountName;
@@ -72,9 +69,14 @@ Page {
                     pwPage.tag = tag;
                     pwPage.pk = pk;
                     pwPage.path = path;
-                    
-                    //pwPage.nav = nav;
 
+                    pwPage.nav = nav;
+
+                } 
+                
+                else if ( path != 786 && _app.checkPIN(enteredPIN.text) ){
+                    pwPage = hpDefinition.createObject();
+                    pwPage.nav = nav;
                 }
                 return pwPage;
             }
@@ -82,6 +84,10 @@ Page {
                 ComponentDefinition {
                     id: pwPageDefinition
                     source: "pwpage.qml"
+                },
+                ComponentDefinition {
+                    id: hpDefinition
+                    source: "Home.qml"
                 }
             ]
             enabled: true

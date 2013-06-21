@@ -4,7 +4,7 @@ Page {
     id: accessPage
 
     property variant nav
-    property variant path: 0
+    property variant path: 786
     actions: [
         ActionItem {
             id: linkAccess
@@ -35,7 +35,7 @@ Page {
     actionBarVisibility: ChromeVisibility.Visible
     paneProperties: NavigationPaneProperties {
         backButton: ActionItem {
-            
+
             id: linkHome
             title: qsTr("Home")
             onTriggered: {
@@ -47,7 +47,7 @@ Page {
             function getHomePage() {
                 if (! homePage) {
                     homePage = homePageDefinition.createObject();
-
+                    homePage.nav = nav;
                 }
                 return homePage;
             }
@@ -72,45 +72,29 @@ Page {
                     StandardListItem {
                         id: accountItem
                         title: ListItemData.accountName
-                        description: qsTr("User name: %1").arg(ListItemData.userName)
+                        description: "Username: " + ListItemData.userName
 
                         contextActions: [
                             ActionSet {
                                 title: ListItemData.accountName
                                 subtitle: "Account Options"
                                 ActionItem {
-                                    title: qsTr("Edit Account")
+                                    title: "Coming soon"
                                     onTriggered: {
-                                        var selectedItem = dataModel.data(accountItem.ListItem.indexPath);
-                                        var passwordPageEdit = passwordPageDefinitionEdit.createObject();
-                                        passwordPageEdit.accountName = selectedItem.accountName;
-                                        passwordPageEdit.userName = selectedItem.userName;
-                                        passwordPageEdit.passWord = selectedItem.passWord;
-                                        passwordPageEdit.tag = selectedItem.tag;
-                                        passwordPageEdit.pk = selectedItem.pk;
-                                        passwordPageEdit.path = 1;
-                                        passwordPageEdit.nav = nav;
-
-                                        nav.push(passwordPageEdit);
+                                        
                                     }
-                                    attachedObjects: [
-                                        ComponentDefinition {
-                                            id: passwordPageDefinitionEdit
-                                            source: "password.qml"
-                                        }
-                                    ]
                                     imageSource: "asset:///png/ic_edit.png"
                                 }
                                 ActionItem {
-                                    title: qsTr("Remove Account")
+                                    title: "Coming soon"
                                     onTriggered: {
-                                        path = 2;
-                                        accountItem.ListItem.view.triggered();
+                                                                               
                                     }
+                                    imageSource: "asset:///png/ic_delete.png"
 
                                 } // remove action item
                             } //action set
-                        ] //actions
+                        ] //contextactions
                     } //standard list
                 } //list item component
             ] //list item components
@@ -142,7 +126,7 @@ Page {
     attachedObjects: [
         ComponentDefinition {
             id: passwordPageDefinition
-            source: "password.qml"
+            source: "Password.qml"
         }
     ]
 }

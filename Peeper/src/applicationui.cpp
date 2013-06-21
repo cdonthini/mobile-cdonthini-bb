@@ -1,12 +1,14 @@
 // Default empty project template
 #include "applicationui.hpp"
-#include "Account.hpp"
+
 
 #include <bb/cascades/Application>
 #include <bb/cascades/QmlDocument>
 #include <bb/cascades/AbstractPane>
 #include <bb/data/SqlDataAccess>
 #include <bb/system/SystemDialog>
+#include <bb/cascades/SceneCover>
+#include <bb/cascades/Container>
 
 #include <QtSql/QtSql>
 #include <QDebug>
@@ -20,6 +22,8 @@ using namespace bb::data;
 #define MODIFY_ACCOUNT 3
 #define REMOVE_ACCOUNT 4
 #define CHECK_PIN 5
+#define CREATE_PIN 6
+#define PIN_EXISTS 7
 
 const char* const ApplicationUI::mPeeperDatabase = "peeperDatabase.db";
 
@@ -32,21 +36,41 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 	dbOpenPublic = false;
 	A_dataModel = 0;
 	initDataModel();
-	// create scene document from main.qml asset
-	// set parent to created document to ensure it exists for the whole application lifetime
-	QmlDocument *qml = QmlDocument::create("asset:///main.qml").parent(this);
-	qml->setContextProperty("_app", this);
-	// create root object for the UI
-	AbstractPane *mainNavi = qml->createRootObject<AbstractPane>();
+
+
 	copyDBToDataFolder(mPeeperDatabase);
 	m_sqlConnection = new SqlConnection("data/peeperDatabase.db", this);
 
 	connect(m_sqlConnection, SIGNAL(reply(const bb::data::DataAccessReply&)),
 			this,
 			SLOT(onLoadAsyncResultData(const bb::data::DataAccessReply&)));
+	QmlDocument *qml;
+	if ( pinExists() ) {
+		qml = QmlDocument::create("asset:///main.qml").parent(this);
+	}
+	else {
+		qml = QmlDocument::create("asset:///Setup.qml").parent(this);
+	}
+		qml->setContextProperty("_app", this);
+		AbstractPane *mainNavi = qml->createRootObject<AbstractPane>();
 	// set created root object as a scene
 	app->setScene(mainNavi);
+	addApplicationCover();
 
+}
+void ApplicationUI::addApplicationCover() {
+    // A small UI consisting of just an ImageView in a Container is set up
+    // and used as the cover for the application when running in minimized mode.
+    QmlDocument *qmlCover = QmlDocument::create("asset:///AppCover.qml").parent(this);
+
+    if (!qmlCover->hasErrors()) {
+        // Create the QML Container from using the QMLDocument.
+        Container *coverContainer = qmlCover->createRootObject<Container>();
+
+        // Create a SceneCover and set the application cover
+        SceneCover *sceneCover = SceneCover::create().content(coverContainer);
+        Application::instance()->setCover(sceneCover);
+    }
 }
 
 ApplicationUI::~ApplicationUI() {
@@ -196,7 +220,7 @@ void ApplicationUI::onLoadAsyncResultData(
 bool ApplicationUI::checkPIN(const QString &pin) {
 	QString query;
 	bool isCorrect = false;
-	QTextStream(&query) << "SELECT password FROM pw WHERE password =" << pin;
+	QTextStream(&query) << "SELECT password FROM pw WHERE password ='" << pin <<"'";
 	DataAccessReply reply = m_sqlConnection->executeAndWait(query, CHECK_PIN);
 
 	if (reply.hasError()) {
@@ -218,7 +242,41 @@ bool ApplicationUI::checkPIN(const QString &pin) {
 	return isCorrect;
 }
 bool ApplicationUI::createPIN(const QString &pin) {
-	QString query;
-	QTextStream(&query) << "SELECT * FROM pw" << pin;
-	return true;
+	QString createPINQuery;
+	bool ok;
+	QTextStream(&createPINQuery) << "INSERT INTO pw VALUES(" << pin.toInt(&ok,10) << ")";
+	if ( ok == false ) {
+		alert(tr("Peep ID should only contain numbers. "));
+		return ok;
+	}
+	DataAccessReply reply = m_sqlConnection->executeAndWait(createPINQuery, CREATE_PIN);
+	if( reply.id() == CREATE_PIN) {
+		return true;
+	}
+	else {
+		alert(tr("Pin Not properly entered. Only numbers please."));
+		return false;
+	}
+}
+bool ApplicationUI::pinExists() {
+	QString pinExistsQuery;
+
+	QTextStream(&pinExistsQuery) << "SELECT * FROM pw";
+	DataAccessReply reply = m_sqlConnection->executeAndWait(pinExistsQuery,PIN_EXISTS);
+
+	if (reply.hasError()) {
+		alert(tr(" DB Error "));
+		return false;
+	} else if (reply.id() != PIN_EXISTS) {
+		alert(tr(" Wrong reply ID "));
+		return false;
+	} else {
+		QVariantList resultList = reply.result().value<QVariantList>();
+		if (resultList.size() > 0) {
+			return true;
+		} else {
+
+			return false;
+		}
+	}
 }

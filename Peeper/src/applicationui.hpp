@@ -32,6 +32,7 @@ public:
     Q_INVOKABLE bool checkPIN(const QString &pin);
     Q_INVOKABLE bool createPIN(const QString &pin);
     Q_INVOKABLE bool dbOpenPublic;
+    Q_INVOKABLE void alert(const QString &message);
     ~ApplicationUI();
 
 
@@ -40,13 +41,14 @@ private slots:
 	void onLoadAsyncResultData(const bb::data::DataAccessReply& reply);
 
 private:
+	void addApplicationCover();
 	bool copyDBToDataFolder(const QString databaseName);
     void initDataModel();
+    bool pinExists();
     bb::cascades::GroupDataModel* dataModel() const;
     bb::cascades::GroupDataModel* A_dataModel;
     QSqlDatabase db;
 
-    void alert(const QString &message);
     // The connection to the SQL database
     bb::data::SqlConnection* m_sqlConnection;
     static const char* const mPeeperDatabase;
