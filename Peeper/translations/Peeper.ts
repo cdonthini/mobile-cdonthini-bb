@@ -91,17 +91,17 @@
 <context>
     <name>Home</name>
     <message>
-        <location filename="../assets/Home.qml" line="14"/>
+        <location filename="../assets/Home.qml" line="25"/>
         <source>Password Keeper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/Home.qml" line="27"/>
+        <location filename="../assets/Home.qml" line="38"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/Home.qml" line="60"/>
+        <location filename="../assets/Home.qml" line="71"/>
         <source>Access</source>
         <translation type="unfinished"></translation>
     </message>
@@ -110,21 +110,16 @@
     <name>Password</name>
     <message>
         <location filename="../assets/Password.qml" line="15"/>
-        <source>Pin</source>
+        <source>Access Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/Password.qml" line="26"/>
-        <source>Enter Pin to view your Password</source>
+        <location filename="../assets/Password.qml" line="46"/>
+        <source>Peep ID here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/Password.qml" line="39"/>
-        <source>Pin here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../assets/Password.qml" line="52"/>
+        <location filename="../assets/Password.qml" line="59"/>
         <source>Submit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -178,63 +173,63 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="38"/>
+        <location filename="../assets/add.qml" line="39"/>
         <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="73"/>
+        <location filename="../assets/add.qml" line="74"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="78"/>
+        <location filename="../assets/add.qml" line="79"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="84"/>
+        <location filename="../assets/add.qml" line="85"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="96"/>
+        <location filename="../assets/add.qml" line="97"/>
         <source>Select a Tag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="99"/>
+        <location filename="../assets/add.qml" line="100"/>
         <source>Email Accounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="108"/>
+        <location filename="../assets/add.qml" line="109"/>
         <source>Utility Accounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="114"/>
+        <location filename="../assets/add.qml" line="115"/>
         <source>Other Accounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="102"/>
+        <location filename="../assets/add.qml" line="103"/>
         <source>Bank Accounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="105"/>
+        <location filename="../assets/add.qml" line="106"/>
         <source>Work Accounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="111"/>
+        <location filename="../assets/add.qml" line="112"/>
         <source>Social Accounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../assets/add.qml" line="62"/>
-        <location filename="../assets/add.qml" line="120"/>
+        <location filename="../assets/add.qml" line="63"/>
+        <location filename="../assets/add.qml" line="121"/>
         <source>Add Account</source>
         <translation type="unfinished"></translation>
     </message>

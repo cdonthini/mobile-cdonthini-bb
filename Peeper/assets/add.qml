@@ -29,6 +29,7 @@ Page {
                     source: "access.qml"
                 }
             ]
+            imageSource: "asset:///png/ic_view_list.png"
         }
     ]
     actionBarVisibility: ChromeVisibility.Visible

@@ -12,7 +12,7 @@ Page {
 
     titleBar: TitleBar {
         id: check
-        title: qsTr("Pin")
+        title: qsTr("Access Page")
         visibility: ChromeVisibility.Visible
 
     }
@@ -23,7 +23,14 @@ Page {
         }
 
         Label {
-            text: qsTr("Enter Pin to view your Password")
+            text : {
+                if (path == 786) {
+                    "Enter Peep ID to view the account details:"
+                }
+                else {
+                    "Enter Peep ID to access the app:"
+                }
+            }
             textStyle.fontSize: FontSize.Large
             multiline: true
             topMargin: 50.0
@@ -36,7 +43,7 @@ Page {
             inputMode: TextFieldInputMode.NumericPassword
             input.submitKey: SubmitKey.Submit
             topMargin: 50.0
-            hintText: qsTr("Pin here")
+            hintText: qsTr("Peep ID here")
             focusHighlightEnabled: true
             input {
                 onSubmitted: {

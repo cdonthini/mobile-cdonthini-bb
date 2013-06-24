@@ -55,7 +55,7 @@
     <author>Chaitanya Donthini</author>
     <authorId>gYAAgJ5UO5krorLq1J7KSKpoL7k</authorId>
     <icon>
-       <image>ic_appCover.png</image>
+       <image>Key-lock-chain-AG-large.jpg</image>
     </icon>
     
     <!--  Unique author ID assigned by signing authority. Required if using debug tokens. -->
@@ -97,6 +97,7 @@
         <include name="*.qm"/>
     </asset>
     <asset path="assets/png/ic_appCover.png">ic_appCover.png</asset>
+    <asset path="assets/png/Key-lock-chain-AG-large.jpg">Key-lock-chain-AG-large.jpg</asset>
     
     <!-- Request permission to execute native code.  Required for native applications. -->
     <permission system="true">run_native</permission>
