@@ -21,13 +21,6 @@ Container {
 
     layout: DockLayout {}
 
-    ImageView {
-        horizontalAlignment: HorizontalAlignment.Fill
-        verticalAlignment: VerticalAlignment.Fill
-
-        imageSource: "asset:///images/article_background.png"
-    }
-
     Container {
         horizontalAlignment: HorizontalAlignment.Fill
         verticalAlignment: VerticalAlignment.Fill
@@ -38,28 +31,21 @@ Container {
 
         Container {
             topPadding: 10
-            leftPadding: 50
+            leftPadding: 5
 
             Label {
                 id: titleLabel
 
                 textStyle.base: SystemDefaults.TextStyles.BodyText
-                textStyle.color: Color.White
             }
 
             Label {
                 id: pubDateLabel
 
                 textStyle.base: SystemDefaults.TextStyles.SmallText
-                textStyle.color: Color.Gray
             }
         }
 
-        ImageView {
-            verticalAlignment: VerticalAlignment.Center
-            minWidth: 20
-
-            imageSource: "asset:///images/arrow.png"
-        }
+        
     }
 }

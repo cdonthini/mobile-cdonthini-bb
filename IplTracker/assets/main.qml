@@ -5,11 +5,15 @@ NavigationPane {
     id: mainNavi
     onPopTransitionEnded: page.destroy()
     Page {
-        titleBar: TitleBar {
-            title: "IPL Teams"
-            visibility: ChromeVisibility.Overlay
-        }
+        
         Container {
+            Label {
+                text: qsTr("IPL Teams")
+                horizontalAlignment: HorizontalAlignment.Center
+                textStyle.fontSize: FontSize.Large
+                textStyle.fontWeight: FontWeight.Bold
+
+            }
             onCreationCompleted: {
                 teamsDataSource.load();
             }
@@ -67,6 +71,7 @@ NavigationPane {
         GroupDataModel {
             id: teamsDataModel
             sortingKeys: [ "order" ]
+            sortedAscending: false
             grouping: ItemGrouping.None
         },
         DataSource {
@@ -82,7 +87,8 @@ NavigationPane {
         },
         GroupDataModel {
             id: teamDataModel
-            grouping: ItemGrouping.None
+            sortingKeys: [ "pubDate" ]
+            grouping: ItemGrouping.ByFullValue
             sortedAscending: false
         },
         DataSource {
@@ -114,7 +120,7 @@ NavigationPane {
                                 id: titleLabel
                                 horizontalAlignment: HorizontalAlignment.Center
                                 textStyle.textAlign: TextAlign.Center
-                                textStyle.fontSize: FontSize.Medium
+                                textStyle.fontSize: FontSize.Large
                             }
                         } // title of the team news page
                         ListView {
@@ -124,7 +130,7 @@ NavigationPane {
                                     type: "item"
                                     ArticleItem {
                                         title: ListItemData.title
-                                        pubDate: ListItemData.pubDate
+                                        //pubDate: ListItemData.pubDate
                                     }
                                 }
                             ]
@@ -135,7 +141,7 @@ NavigationPane {
                                 mainNavi.push(page);
                             }
                             layout: StackListLayout {
-                                orientation: LayoutOrientation.BottomToTop
+                                orientation: LayoutOrientation.TopToBottom
 
                             }
                         } //listview - list
