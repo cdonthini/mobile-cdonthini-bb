@@ -55,6 +55,7 @@
     <author>Chaitanya Donthini</author>
     <authorId>gYAAgJ5UO5krorLq1J7KSKpoL7k</authorId>
     <icon>
+       <image/>
        <image>Key-lock-chain-AG-large.jpg</image>
     </icon>
     
@@ -76,7 +77,7 @@
     <configuration name="Device-Release">
        <entryPointType>Qnx/Cascades</entryPointType>
        <platformArchitecture>armle-v7</platformArchitecture>
-       <asset path="arm/o.le-v7/Peeper.so" entry="true" type="Qnx/Elf">Peeper.so</asset>
+       <asset path="arm/o.le-v7/libPeeper.so" entry="true" type="Qnx/Elf">libPeeper.so</asset>
     </configuration>
     <configuration name="Device-Profile">
        <platformArchitecture>armle-v7</platformArchitecture>
@@ -89,15 +90,15 @@
     
     <!--  The icon for the application -->
 
-    <asset path="icon.png">icon.png</asset>
+    
     <asset path="assets">assets</asset>
     
     <!-- Locale support -->
     <asset path="translations" dest="qm">
         <include name="*.qm"/>
     </asset>
-    <asset path="assets/png/ic_appCover.png">ic_appCover.png</asset>
     <asset path="assets/png/Key-lock-chain-AG-large.jpg">Key-lock-chain-AG-large.jpg</asset>
+    
     
     <!-- Request permission to execute native code.  Required for native applications. -->
     <permission system="true">run_native</permission>

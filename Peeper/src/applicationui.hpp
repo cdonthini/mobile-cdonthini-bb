@@ -25,9 +25,10 @@ class ApplicationUI : public QObject
 public:
     ApplicationUI(bb::cascades::Application *app);
 
-    Q_INVOKABLE bool createRecord(const QString &title , const QString &username, const QString &password, const QString &tag);
-    Q_INVOKABLE bool modify(const QString &title , const QString &username, const QString &password, const QString &tag);
+    Q_INVOKABLE bool createRecord(const QString &title , const QString &username, const QString &password, const QString &tag, const QString &peepID);
+    Q_INVOKABLE bool modify(const QString &title , const QString &username, const QString &password, const QString &tag, const QString &peepID);
     Q_INVOKABLE void readRecords();
+    Q_INVOKABLE QString decryptPW(const QString& pw, const QString& peepID);
     Q_INVOKABLE bool remove(const QString &pk);
     Q_INVOKABLE bool checkPIN(const QString &pin);
     Q_INVOKABLE bool createPIN(const QString &pin);

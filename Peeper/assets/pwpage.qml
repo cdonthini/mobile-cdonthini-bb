@@ -6,10 +6,11 @@ Page {
     property variant nav
     property alias accountName : anText.text
     property alias userName : unText.text
-    property alias passWord : pwText.text
+    property variant passWord
     property variant tag
     property variant pk
     property int path
+    property variant peepID
 
     titleBar: TitleBar {
         id: check
@@ -54,6 +55,7 @@ Page {
         }
         TextField {
             id: pwText
+            text: _app.decryptPW(passWord.toString(), peepID.toString())
             onTextChanging: {
                 editB.enabled = true;
             }
@@ -87,6 +89,7 @@ Page {
                 if (! homePage) {
                     homePage = homePageDefinition.createObject();
                     homePage.nav = nav;
+                    homePage.peepID = peepID;
                 }
                 return homePage;
             }
@@ -112,7 +115,7 @@ Page {
                 text: qsTr("Update")
 
                 onClicked: {
-                    _app.modify(anText.text, unText.text, pwText.text, pk);
+                    _app.modify(anText.text, unText.text, pwText.text, pk, peepID.toString());
                     _app.readRecords();
                     var page = getAccessPage();
                     nav.push(page);
@@ -122,6 +125,7 @@ Page {
                     if (! accessPage) {
                         accessPage = accessPageDefinitionEdit.createObject();
                         accessPage.nav = nav;
+                        accessPage.peepID = peepID;
                     }
                     return accessPage;
                 }
@@ -139,6 +143,7 @@ Page {
                 text: qsTr("Remove")
 
                 onClicked: {
+                    
                     _app.remove(pk);
                     _app.readRecords();
                     var page = getAccessPage();
@@ -149,6 +154,7 @@ Page {
                     if (! accessPage) {
                         accessPage = accessPageDefinitionRemove.createObject();
                         accessPage.nav = nav;
+                        accessPage.peepID = peepID;
                     }
                     return accessPage;
                 }

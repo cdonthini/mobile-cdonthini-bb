@@ -2,7 +2,7 @@ import bb.cascades 1.0
 
 Page {
     id: accessPage
-
+    property variant peepID
     property variant nav
     property variant path: 786
     actions: [
@@ -19,6 +19,7 @@ Page {
                 if (! addPage) {
                     addPage = addPageDefinition.createObject();
                     addPage.nav = nav;
+                    addPage.peepID = peepID;
                 }
                 return addPage;
             }
@@ -48,6 +49,7 @@ Page {
                 if (! homePage) {
                     homePage = homePageDefinition.createObject();
                     homePage.nav = nav;
+                    homePage.peepID = peepID;
                 }
                 return homePage;
             }
@@ -109,7 +111,7 @@ Page {
                 passwordPage.pk = chosenItem.pk;
                 passwordPage.path = path;
                 passwordPage.nav = nav;
-
+                passwordPage.peepID = peepID;
                 nav.push(passwordPage);
             }
 

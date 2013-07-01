@@ -46,7 +46,7 @@ NavigationPane {
 
                     hintText: qsTr("Numeric Peep ID ###")
                     inputMode: TextFieldInputMode.NumericPassword
-                    input.submitKey: SubmitKey.Submit
+                    input.submitKey: SubmitKey.Next
 
                     translationY: 20.0
 
@@ -84,6 +84,7 @@ NavigationPane {
                                 if (! homePage && _app.createPIN(enteredPIN.text)) {
                                     homePage = homePageDefinition.createObject();
                                     homePage.nav = mainNavig;
+                                    homePage.peepID = reenteredPIN.text;
                                 }
                                 return homePage;
                             } else {

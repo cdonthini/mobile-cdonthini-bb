@@ -9,6 +9,7 @@ Page {
     property variant tag
     property variant pk
     property int path
+    property variant peepID
 
     titleBar: TitleBar {
         id: check
@@ -76,7 +77,7 @@ Page {
                     pwPage.tag = tag;
                     pwPage.pk = pk;
                     pwPage.path = path;
-
+                    pwPage.peepID = peepID;
                     pwPage.nav = nav;
 
                 } 
@@ -84,6 +85,7 @@ Page {
                 else if ( path != 786 && _app.checkPIN(enteredPIN.text) ){
                     pwPage = hpDefinition.createObject();
                     pwPage.nav = nav;
+                    pwPage.peepID = enteredPIN.text;
                 }
                 return pwPage;
             }

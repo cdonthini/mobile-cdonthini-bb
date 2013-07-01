@@ -2,6 +2,7 @@ import bb.cascades 1.0
 
 Page {
     property variant nav
+    property variant peepID
     
     
     actions: [
@@ -20,6 +21,7 @@ Page {
                 if (! accessPage) {
                     accessPage = accessPageDefinition.createObject();
                     accessPage.nav = nav;
+                    accessPage.peepID = peepID;
                 }
                 return accessPage;
             }
@@ -47,6 +49,7 @@ Page {
                 if (! homePage) {
                     homePage = homePageDefinition.createObject();
                     homePage.nav = nav;
+                    homePage.peepID = peepID;
                 }
                 return homePage;
             }
@@ -64,6 +67,7 @@ Page {
         visibility: ChromeVisibility.Visible
 
     }
+    
     Container {
         
         Divider {
@@ -121,7 +125,7 @@ Page {
             text: qsTr("Add Account")
             onClicked: {
 
-                _app.createRecord(title.text, username.text, password.text, tags.selectedOption.text);
+                _app.createRecord(title.text, username.text, password.text , tags.selectedOption.text, peepID.toString());
 
                 var page = getAddHomePage();
                 nav.push(page);
@@ -131,6 +135,7 @@ Page {
                 if (! homePage) {
                     homePage = addHomePageDefinition.createObject();
                     homePage.nav = nav;
+                    homePage.peepID = peepID;
                 }
                 return homePage;
             }
@@ -142,6 +147,7 @@ Page {
             ]
             horizontalAlignment: HorizontalAlignment.Center
             topMargin: 45.0
+            imageSource: "asset:///png/ic_add.png"
 
         }
 

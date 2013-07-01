@@ -1,7 +1,6 @@
 // Default empty project template
 #include "applicationui.hpp"
 
-
 #include <bb/cascades/Application>
 #include <bb/cascades/QmlDocument>
 #include <bb/cascades/AbstractPane>
@@ -37,7 +36,6 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 	A_dataModel = 0;
 	initDataModel();
 
-
 	copyDBToDataFolder(mPeeperDatabase);
 	m_sqlConnection = new SqlConnection("data/peeperDatabase.db", this);
 
@@ -45,32 +43,32 @@ ApplicationUI::ApplicationUI(bb::cascades::Application *app) :
 			this,
 			SLOT(onLoadAsyncResultData(const bb::data::DataAccessReply&)));
 	QmlDocument *qml;
-	if ( pinExists() ) {
+	if (pinExists()) {
 		qml = QmlDocument::create("asset:///main.qml").parent(this);
-	}
-	else {
+	} else {
 		qml = QmlDocument::create("asset:///Setup.qml").parent(this);
 	}
-		qml->setContextProperty("_app", this);
-		AbstractPane *mainNavi = qml->createRootObject<AbstractPane>();
+	qml->setContextProperty("_app", this);
+	AbstractPane *mainNavi = qml->createRootObject<AbstractPane>();
 	// set created root object as a scene
 	app->setScene(mainNavi);
 	addApplicationCover();
 
 }
 void ApplicationUI::addApplicationCover() {
-    // A small UI consisting of just an ImageView in a Container is set up
-    // and used as the cover for the application when running in minimized mode.
-    QmlDocument *qmlCover = QmlDocument::create("asset:///AppCover.qml").parent(this);
+	// A small UI consisting of just an ImageView in a Container is set up
+	// and used as the cover for the application when running in minimized mode.
+	QmlDocument *qmlCover = QmlDocument::create("asset:///AppCover.qml").parent(
+			this);
 
-    if (!qmlCover->hasErrors()) {
-        // Create the QML Container from using the QMLDocument.
-        Container *coverContainer = qmlCover->createRootObject<Container>();
+	if (!qmlCover->hasErrors()) {
+		// Create the QML Container from using the QMLDocument.
+		Container *coverContainer = qmlCover->createRootObject<Container>();
 
-        // Create a SceneCover and set the application cover
-        SceneCover *sceneCover = SceneCover::create().content(coverContainer);
-        Application::instance()->setCover(sceneCover);
-    }
+		// Create a SceneCover and set the application cover
+		SceneCover *sceneCover = SceneCover::create().content(coverContainer);
+		Application::instance()->setCover(sceneCover);
+	}
 }
 
 ApplicationUI::~ApplicationUI() {
@@ -105,18 +103,21 @@ bool ApplicationUI::copyDBToDataFolder(const QString databaseName) {
 }
 
 bool ApplicationUI::createRecord(const QString &title, const QString &username,
-		const QString &password, const QString &tag) {
+		const QString &password, const QString &tag, const QString &peepID) {
 
 	if (password.isEmpty()) {
 		alert(tr("Need to enter something in all fields)"));
 		return false;
 	}
-
+	QString encryptedPW = password;
+	for (int i = 0; i < password.length(); i++) {
+		encryptedPW[i] = (QChar)(password[i].unicode() + peepID[i % peepID.length()].unicode());
+	}
 	QString query;
 
 	QTextStream(&query)
 			<< "INSERT INTO accounts (tag, accountName, userName, passWord) VALUES ('"
-			<< tag << "','" << title << "','" << username << "','" << password
+			<< tag << "','" << title << "','" << username << "','" << encryptedPW
 			<< "')";
 
 	DataAccessReply reply = m_sqlConnection->executeAndWait(query, ADD_ACCOUNT);
@@ -131,6 +132,13 @@ bool ApplicationUI::createRecord(const QString &title, const QString &username,
 	}
 
 	return success;
+}
+QString ApplicationUI::decryptPW(const QString& pw, const QString& peepID){
+	QString decryptedPW = pw;
+	for (int i = 0; i < pw.length(); i++) {
+		decryptedPW[i] = (QChar)(pw[i].unicode() - peepID[i % peepID.length()].unicode());
+	}
+	return decryptedPW;
 }
 void ApplicationUI::initDataModel() {
 	A_dataModel = new bb::cascades::GroupDataModel(this);
@@ -152,19 +160,22 @@ void ApplicationUI::readRecords() {
 	}
 }
 bool ApplicationUI::modify(const QString &title, const QString &username,
-		const QString &password, const QString &pk) {
+		const QString &password, const QString &pk, const QString &peepID) {
 	QString sqlQueryModify;
-
+	QString encryptedPW = password;
+	for (int i = 0; i < password.length(); i++) {
+		encryptedPW[i] = (QChar)(password[i].unicode() + peepID[i % peepID.length()].unicode());
+	}
 	QTextStream(&sqlQueryModify) << "UPDATE accounts set accountName ='"
 			<< title << "', userName='" << username << "', passWord ='"
-			<< password << "' where pk =" << pk;
+			<< encryptedPW << "' where pk =" << pk;
 	DataAccessReply reply = m_sqlConnection->executeAndWait(sqlQueryModify,
 			MODIFY_ACCOUNT);
 	if (reply.hasError()) {
 		alert(tr("reading records ERROR"));
 	} else {
 		alert(tr("Account Updated."));
-		;
+
 	}
 	return true;
 }
@@ -220,7 +231,16 @@ void ApplicationUI::onLoadAsyncResultData(
 bool ApplicationUI::checkPIN(const QString &pin) {
 	QString query;
 	bool isCorrect = false;
-	QTextStream(&query) << "SELECT password FROM pw WHERE password ='" << pin <<"'";
+	bool ok = false;
+	int pinInt = pin.toInt(&ok, 10);
+	if (ok == false) {
+		alert(tr("Wrong PeepID. Remember PeepID only contains numbers! "));
+		return ok;
+	}
+	pinInt += pinInt;
+
+	QTextStream(&query) << "SELECT password FROM pw WHERE password =" << pinInt
+			<< "";
 	DataAccessReply reply = m_sqlConnection->executeAndWait(query, CHECK_PIN);
 
 	if (reply.hasError()) {
@@ -235,7 +255,7 @@ bool ApplicationUI::checkPIN(const QString &pin) {
 			return true;
 		} else {
 			isCorrect = false;
-			alert(tr(" Wrong PIN. Try Again! "));
+			alert(tr(" Wrong PeepID. Try Again! "));
 		}
 	}
 
@@ -244,16 +264,19 @@ bool ApplicationUI::checkPIN(const QString &pin) {
 bool ApplicationUI::createPIN(const QString &pin) {
 	QString createPINQuery;
 	bool ok;
-	QTextStream(&createPINQuery) << "INSERT INTO pw VALUES(" << pin.toInt(&ok,10) << ")";
-	if ( ok == false ) {
+	int pinInt = pin.toInt(&ok, 10);
+	if (ok == false) {
 		alert(tr("Peep ID should only contain numbers. "));
 		return ok;
 	}
-	DataAccessReply reply = m_sqlConnection->executeAndWait(createPINQuery, CREATE_PIN);
-	if( reply.id() == CREATE_PIN) {
+	pinInt += pinInt;
+	QTextStream(&createPINQuery) << "INSERT INTO pw VALUES(" << pinInt << ")";
+
+	DataAccessReply reply = m_sqlConnection->executeAndWait(createPINQuery,
+			CREATE_PIN);
+	if (reply.id() == CREATE_PIN) {
 		return true;
-	}
-	else {
+	} else {
 		alert(tr("Pin Not properly entered. Only numbers please."));
 		return false;
 	}
@@ -262,7 +285,8 @@ bool ApplicationUI::pinExists() {
 	QString pinExistsQuery;
 
 	QTextStream(&pinExistsQuery) << "SELECT * FROM pw";
-	DataAccessReply reply = m_sqlConnection->executeAndWait(pinExistsQuery,PIN_EXISTS);
+	DataAccessReply reply = m_sqlConnection->executeAndWait(pinExistsQuery,
+			PIN_EXISTS);
 
 	if (reply.hasError()) {
 		alert(tr(" DB Error "));

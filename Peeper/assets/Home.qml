@@ -3,17 +3,21 @@ import bb.cascades 1.0
 Page {
     id: homePage
     property variant nav
+    property variant peepID
     actionBarVisibility: ChromeVisibility.Hidden
     Container {
         layout: DockLayout {
 
         }
+        
         ImageView {
             id: background
             imageSource: "asset:///png/Key-lock-chain-AG-large.jpg"
 
             verticalAlignment: VerticalAlignment.Fill
             horizontalAlignment: HorizontalAlignment.Fill
+            translationY: 115.0
+            opacity: 0.9
 
         }
         Container {
@@ -34,6 +38,7 @@ Page {
             }
 
             Button {
+                
                 id: addButton
                 text: qsTr("Add")
                 topMargin: 100.0
@@ -52,7 +57,7 @@ Page {
                     if (! addPage) {
                         addPage = addPageDefinition.createObject();
                         addPage.nav = nav;
-
+                        addPage.peepID = peepID;
                     }
                     return addPage;
                 }
@@ -66,7 +71,7 @@ Page {
 
             }
             Button {
-                imageSource: "//assets/png/ic_view_list.png"
+                imageSource: "asset:///png/ic_view_list.png"
                 id: accessButton
                 text: qsTr("Access")
                 enabled: _app.dbOpenPublic
@@ -85,7 +90,7 @@ Page {
                     if (! accessPage) {
                         accessPage = accessPageDefinition.createObject();
                         accessPage.nav = nav;
-
+                        accessPage.peepID = peepID;
                     }
                     return accessPage;
                 }
