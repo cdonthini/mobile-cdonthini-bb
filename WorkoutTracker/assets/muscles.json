@@ -1,0 +1,11 @@
+[
+{ "order": 1, "name": "Abdominals", "image":""},
+{ "order": 2, "name": "Biceps", "image":"" },
+{ "order": 3, "name": "Deltoids", "image":"" },
+{ "order": 4, "name": "Erector Spinae (Lower Back)", "image":""},
+{ "order": 5, "name": "Hamstrings", "image":""},
+{ "order": 6, "name": "Back", "image":"" },
+{ "order": 7, "name": "Obliques", "image":"" },
+{ "order": 8, "name": "Chest", "image":"" },
+{ "order": 9, "name": "Triceps", "image":"" }
+]
