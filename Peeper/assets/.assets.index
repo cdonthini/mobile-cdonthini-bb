@@ -1,5 +1,5 @@
 1
-20
+26
 access.qml
 add.qml
 AppCover.qml
@@ -9,14 +9,20 @@ Password.qml
 png/icon_home.png
 png/ic_add.png
 png/ic_cancel.png
+png/ic_copy_password.png
 png/ic_delete.png
 png/ic_done.png
 png/ic_edit.png
+png/ic_open.png
+png/ic_open_link.png
 png/ic_view_list.png
 png/Key-lock-chain-AG-large.jpg
+png/PeeperIcon.png
+png/PeeperIconBig.png
 png/sceneCover.amd
 png/sceneCover.png
 png/setupCover.png
 pwpage.qml
 Setup.qml
 sql/peeperDatabase.db
+UrlPage.qml

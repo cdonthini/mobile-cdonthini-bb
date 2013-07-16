@@ -7,6 +7,7 @@ Page {
     property variant userName
     property variant passWord
     property variant tag
+    property variant urlID
     property variant pk
     property int path
     property variant peepID
@@ -75,6 +76,7 @@ Page {
                     pwPage.userName = userName;
                     pwPage.passWord = passWord;
                     pwPage.tag = tag;
+                    pwPage.urlID = urlID;
                     pwPage.pk = pk;
                     pwPage.path = path;
                     pwPage.peepID = peepID;

@@ -1,7 +1,9 @@
 1
-10
+15
 Access.qml
+AddExercise.qml
 AddWorkout.qml
+AppCover.qml
 images/camera.jpg
 images/flashOFF.jpg
 images/flashON.jpg
@@ -10,3 +12,6 @@ main.qml
 MuscleList.qml
 muscles.json
 Pic.qml
+reps.xml
+sets.xml
+SQL/wt.db

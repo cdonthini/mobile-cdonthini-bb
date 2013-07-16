@@ -2,6 +2,7 @@ import bb.cascades 1.0
 
 NavigationPane {
     id: navigationPane
+    //property variant nav
     Page {
 
         Container {
@@ -55,6 +56,7 @@ NavigationPane {
                 text: qsTr("Check ->")
 
                 onClicked: {
+                    _app.retrieveExercises();
                     // show detail page when the button is clicked
                     var page = getCheckPage();
                     console.debug("pushing detail " + page)
@@ -65,6 +67,7 @@ NavigationPane {
                     if (! checkPage) {
                         checkPage = checkDefinition.createObject();
                         checkPage.nav = navigationPane;
+                        
                     }
                     return checkPage;
                 }

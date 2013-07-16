@@ -11,7 +11,7 @@ Page {
 
         Camera {
             id: camera
-
+            property bool photoBeingTaken;
             horizontalAlignment: HorizontalAlignment.Fill
             verticalAlignment: VerticalAlignment.Fill
 
@@ -20,18 +20,32 @@ Page {
                 getSettings(cameraSettings);
                 cameraSettings.flashMode = CameraFlashMode.Off;
                 cameraSettings.cameraMode = CameraMode.Photo;
-                cameraSettings.cameraRollPath = ".../accounts/1000/shared/camera/workoutTracker";
+                
                 applySettings(cameraSettings);
                 camera.startViewfinder();
-
             }
             onTouch: {
-                if (event.isDown()) camera.capturePhoto();
+                if (photoBeingTaken == false) {
+                    photoBeingTaken = true;
+                    camera.capturePhoto();
+                    shutterSound.play();
+                }	
             }
-
+            onViewfinderStarted: {
+                photoBeingTaken = false;
+            }
+            onPhotoSaved: {
+                photoBeingTaken = false;
+                
+            }
             attachedObjects: [
                 CameraSettings {
                     id: cameraSettings
+                    cameraRollPath: ".../accounts/1000/shared/documents"
+                },
+                SystemSound {
+                    id: shutterSound
+                    sound: SystemSound.CameraShutterEvent
                 }
             ]
         }
@@ -53,11 +67,11 @@ Page {
                 }
                 camera.applySettings(cameraSettings);
             }
-            imageSource : "asset:///images/flashOFF.jpg"
+            //imageSource : "asset:///images/flashOFF.jpg"
         },
         ActionItem {
             ActionBar.placement: ActionBarPlacement.InOverflow
-            id: cameraUnit
+            id: chooseUnit
             title: qsTr("Switch")
             onTriggered: {
                 if (camera.cameraUnit == CameraUnit.Front) {

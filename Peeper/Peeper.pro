@@ -10,7 +10,6 @@ LIBS += -lbbsystem
 LIBS += -lbbdata
 
 
-
 lupdate_inclusion {
     SOURCES += ../assets/*.qml
 }

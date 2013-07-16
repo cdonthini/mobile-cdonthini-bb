@@ -88,6 +88,13 @@ Page {
             id: password
             hintText: qsTr("Password")
             inputMode: TextFieldInputMode.Password
+            
+            
+        }
+        TextField {
+            id: urlID
+            hintText: qsTr("URL")
+            inputMode: TextFieldInputMode.Url
             input.submitKey: SubmitKey.Submit
             input {
                 onSubmitted: {
@@ -95,7 +102,6 @@ Page {
                 }
             }
         }
-
         DropDown {
             id: tags
             title: qsTr("Select a Tag")
@@ -125,7 +131,7 @@ Page {
             text: qsTr("Add Account")
             onClicked: {
 
-                _app.createRecord(title.text, username.text, password.text , tags.selectedOption.text, peepID.toString());
+                _app.createRecord(title.text, username.text, password.text , tags.selectedOption.text, peepID.toString(),urlID.text);
 
                 var page = getAddHomePage();
                 nav.push(page);

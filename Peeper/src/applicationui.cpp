@@ -1,4 +1,4 @@
-// Default empty project template
+
 #include "applicationui.hpp"
 
 #include <bb/cascades/Application>
@@ -8,7 +8,7 @@
 #include <bb/system/SystemDialog>
 #include <bb/cascades/SceneCover>
 #include <bb/cascades/Container>
-
+#include <bb/system/Clipboard.hpp>
 #include <QtSql/QtSql>
 #include <QDebug>
 
@@ -103,7 +103,7 @@ bool ApplicationUI::copyDBToDataFolder(const QString databaseName) {
 }
 
 bool ApplicationUI::createRecord(const QString &title, const QString &username,
-		const QString &password, const QString &tag, const QString &peepID) {
+		const QString &password, const QString &tag, const QString &peepID, const QString &urlID) {
 
 	if (password.isEmpty()) {
 		alert(tr("Need to enter something in all fields)"));
@@ -116,9 +116,9 @@ bool ApplicationUI::createRecord(const QString &title, const QString &username,
 	QString query;
 
 	QTextStream(&query)
-			<< "INSERT INTO accounts (tag, accountName, userName, passWord) VALUES ('"
+			<< "INSERT INTO accounts (tag, accountName, userName, passWord, urlID) VALUES ('"
 			<< tag << "','" << title << "','" << username << "','" << encryptedPW
-			<< "')";
+			<< "','"<< urlID<< "')";
 
 	DataAccessReply reply = m_sqlConnection->executeAndWait(query, ADD_ACCOUNT);
 
@@ -140,6 +140,13 @@ QString ApplicationUI::decryptPW(const QString& pw, const QString& peepID){
 	}
 	return decryptedPW;
 }
+bool ApplicationUI::copyPassword(const QString& decryptPW){
+	Clipboard cboard;
+	cboard.clear();
+	const QString type = "text/plain";
+	return cboard.insert(type,decryptPW.toAscii());
+
+}
 void ApplicationUI::initDataModel() {
 	A_dataModel = new bb::cascades::GroupDataModel(this);
 	A_dataModel->setSortingKeys(QStringList() << "tag");
@@ -149,7 +156,7 @@ void ApplicationUI::readRecords() {
 	A_dataModel->clear();
 
 	const QString sqlQuery =
-			"SELECT pk, tag, accountName, userName, passWord FROM accounts";
+			"SELECT pk, tag, accountName, userName, passWord, urlID FROM accounts";
 	DataAccessReply reply = m_sqlConnection->executeAndWait(sqlQuery,
 			READ_ACCOUNTS);
 

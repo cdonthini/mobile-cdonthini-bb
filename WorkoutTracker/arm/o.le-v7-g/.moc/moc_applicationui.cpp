@@ -22,26 +22,55 @@ static const uint qt_meta_data_ApplicationUI[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
-       0,    0, // properties
+       4,   14, // methods
+       1,   34, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: signature, parameters, type, tag, flags
+      21,   15,   14,   14, 0x08,
+
+ // methods: signature, parameters, type, tag, flags
+      78,   70,   14,   14, 0x02,
+     289,   98,   93,   14, 0x02,
+     446,   14,   14,   14, 0x02,
+
+ // properties: name, type, flags
+     491,  466, 0x00095409,
+
        0        // eod
 };
 
 static const char qt_meta_stringdata_ApplicationUI[] = {
-    "ApplicationUI\0"
+    "ApplicationUI\0\0reply\0"
+    "onLoadAsyncResultData(bb::data::DataAccessReply)\0"
+    "message\0alert(QString)\0bool\0"
+    "setsixweight,setsixreps,setfiveweight,setfivereps,setfourweight,setfou"
+    "rreps,setthreeweight,setthreereps,settwoweight,settworeps,setoneweight"
+    ",setonereps,units,numsets,title,muscle,date,pic_fn\0"
+    "addExercise(QString,QString,QString,QString,QString,QString,QString,QS"
+    "tring,QString,QString,QString,QString,QString,QString,QString,QString,"
+    "QString,QString)\0"
+    "retrieveExercises()\0bb::cascades::DataModel*\0"
+    "dataModel\0"
 };
 
 void ApplicationUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
+        ApplicationUI *_t = static_cast<ApplicationUI *>(_o);
+        switch (_id) {
+        case 0: _t->onLoadAsyncResultData((*reinterpret_cast< const bb::data::DataAccessReply(*)>(_a[1]))); break;
+        case 1: _t->alert((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 2: { bool _r = _t->addExercise((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4])),(*reinterpret_cast< const QString(*)>(_a[5])),(*reinterpret_cast< const QString(*)>(_a[6])),(*reinterpret_cast< const QString(*)>(_a[7])),(*reinterpret_cast< const QString(*)>(_a[8])),(*reinterpret_cast< const QString(*)>(_a[9])),(*reinterpret_cast< const QString(*)>(_a[10])),(*reinterpret_cast< const QString(*)>(_a[11])),(*reinterpret_cast< const QString(*)>(_a[12])),(*reinterpret_cast< const QString(*)>(_a[13])),(*reinterpret_cast< const QString(*)>(_a[14])),(*reinterpret_cast< const QString(*)>(_a[15])),(*reinterpret_cast< const QString(*)>(_a[16])),(*reinterpret_cast< const QString(*)>(_a[17])),(*reinterpret_cast< const QString(*)>(_a[18])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 3: _t->retrieveExercises(); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObjectExtraData ApplicationUI::staticMetaObjectExtraData = {
@@ -75,6 +104,34 @@ int ApplicationUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 4)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 4;
+    }
+#ifndef QT_NO_PROPERTIES
+      else if (_c == QMetaObject::ReadProperty) {
+        void *_v = _a[0];
+        switch (_id) {
+        case 0: *reinterpret_cast< bb::cascades::DataModel**>(_v) = dataModel(); break;
+        }
+        _id -= 1;
+    } else if (_c == QMetaObject::WriteProperty) {
+        _id -= 1;
+    } else if (_c == QMetaObject::ResetProperty) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyDesignable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyScriptable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyStored) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyEditable) {
+        _id -= 1;
+    } else if (_c == QMetaObject::QueryPropertyUser) {
+        _id -= 1;
+    }
+#endif // QT_NO_PROPERTIES
     return _id;
 }
 QT_END_MOC_NAMESPACE

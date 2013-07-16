@@ -1,0 +1,66 @@
+<model>
+ <column> 
+    <reps text="1"  />
+    <reps text="2"  />
+    <reps text="3"  />
+    <reps text="4"  />
+    <reps text="5" />
+    <reps text="6"  />
+    <reps text="7"  />
+    <reps text="8"  />
+    <reps text="9"  />
+    <reps text="10"  />
+    <reps text="11"  />
+    <reps text="12"  />
+    <reps text="13"  />
+    <reps text="14"  />
+    <reps text="15" />
+    <reps text="16"  />
+    <reps text="17"  />
+    <reps text="18"  />
+    <reps text="19"  />
+    <reps text="20"  />
+    <reps text="21"  />
+    <reps text="22"  />
+    <reps text="23"  />
+    <reps text="24"  />
+    <reps text="25" />
+    <reps text="26"  />
+    <reps text="27"  />
+    <reps text="28"  />
+    <reps text="29"  />
+    <reps text="30"  />
+	</column>
+	<column> 
+    <weight lbs="10" kgs="1" />
+    <weight lbs="20" kgs="2" />
+    <weight lbs="30" kgs="3" />
+    <weight lbs="40" kgs="4" />
+    <weight lbs="50" kgs="5"/>
+    <weight lbs="60" kgs="6" />
+    <weight lbs="70" kgs="7" />
+    <weight lbs="80" kgs="8" />
+    <weight lbs="90" kgs="9"/>
+    <weight lbs="100" kgs="10" />
+    <weight lbs="110" kgs="11" />
+    <weight lbs="120" kgs="12" />
+    <weight lbs="130" kgs="13" />
+    <weight lbs="140" kgs="14" />
+    <weight lbs="150" kgs="15"/>
+    <weight lbs="160" kgs="16" />
+    <weight lbs="170" kgs="17" />
+    <weight lbs="180" kgs="18" />
+    <weight lbs="190" kgs="19" />
+    <weight lbs="200" kgs="20" />
+    <weight lbs="210" kgs="21" />
+    <weight lbs="220" kgs="22" />
+    <weight lbs="230" kgs="23" />
+    <weight lbs="240" kgs="24" />
+    <weight lbs="250" kgs="25"/>
+    <weight lbs="260" kgs="26" />
+    <weight lbs="270" kgs="27" />
+    <weight lbs="280" kgs="28" />
+    <weight lbs="290" kgs="29" />
+    <weight lbs="300" kgs="30" />
+	</column>
+</model>

@@ -5,6 +5,7 @@ Page {
     property variant nav
 
     Container {
+
         onCreationCompleted: {
             muscleListDataSource.load();
         }
@@ -22,20 +23,24 @@ Page {
                             id: musclename
                             Label {
                                 text: ListItemData.name
+                                textStyle.base: SystemDefaults.TextStyles.TitleText
+                                topMargin: 10.0
+                                bottomMargin: 10.0
                             }
                         }
                         Divider {
-
+                            preferredHeight: 3.0
                         }
                     }
                 }
             ]
             onTriggered: {
                 var feedMuscle = muscleListDataModel.data(indexPath);
-                muscleListDataSource.source = feedMuscle.feed;
+                //muscleListDataSource.source = feedMuscle.feed;
                 muscleListDataSource.load();
                 var page = addWorkoutDefinition.createObject();
                 page.title = feedMuscle.name;
+                page.nav = nav;
                 nav.push(page);
             }
 
@@ -60,7 +65,11 @@ Page {
         },
         ComponentDefinition {
             id: addWorkoutDefinition
-            source: "AddWorkout.qml"
+            source: "AddExercise.qml"
         }
     ]
+    titleBar: TitleBar {
+        title: qsTr("Muscle List")
+
+    }
 }

@@ -109,6 +109,7 @@ Page {
                 passwordPage.passWord = chosenItem.passWord;
                 passwordPage.tag = chosenItem.tag;
                 passwordPage.pk = chosenItem.pk;
+                passwordPage.urlID = chosenItem.urlID;
                 passwordPage.path = path;
                 passwordPage.nav = nav;
                 passwordPage.peepID = peepID;
