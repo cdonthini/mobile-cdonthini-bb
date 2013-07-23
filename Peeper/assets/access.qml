@@ -5,6 +5,19 @@ Page {
     property variant peepID
     property variant nav
     property variant path: 786
+    onCreationCompleted: {
+        Application.asleep.connect(onAsleep);
+    }
+    function onAsleep() {
+        _app.readRecords();
+       // _app.alert("access asleep");
+        var pPage = pPageDefinition.createObject();        
+        pPage.path = path;        
+        pPage.nav = nav;
+        pPage.peepID = peepID;
+        nav.push(pPage);
+    }
+   
     actions: [
         ActionItem {
             id: linkAccess
@@ -130,6 +143,10 @@ Page {
         ComponentDefinition {
             id: passwordPageDefinition
             source: "Password.qml"
+        },
+        ComponentDefinition {
+            id: pPageDefinition
+            source: "access.qml"
         }
     ]
 }

@@ -1,4 +1,3 @@
-
 #include "applicationui.hpp"
 
 #include <bb/cascades/Application>
@@ -6,6 +5,7 @@
 #include <bb/cascades/AbstractPane>
 #include <bb/data/SqlDataAccess>
 #include <bb/system/SystemDialog>
+#include <bb/system/SystemUiInputMode>
 #include <bb/cascades/SceneCover>
 #include <bb/cascades/Container>
 #include <bb/system/Clipboard.hpp>
@@ -23,6 +23,7 @@ using namespace bb::data;
 #define CHECK_PIN 5
 #define CREATE_PIN 6
 #define PIN_EXISTS 7
+#define UPDATE_ACCOUNT 8
 
 const char* const ApplicationUI::mPeeperDatabase = "peeperDatabase.db";
 
@@ -103,7 +104,8 @@ bool ApplicationUI::copyDBToDataFolder(const QString databaseName) {
 }
 
 bool ApplicationUI::createRecord(const QString &title, const QString &username,
-		const QString &password, const QString &tag, const QString &peepID, const QString &urlID) {
+		const QString &password, const QString &tag, const QString &peepID,
+		const QString &urlID) {
 
 	if (password.isEmpty()) {
 		alert(tr("Need to enter something in all fields)"));
@@ -111,14 +113,15 @@ bool ApplicationUI::createRecord(const QString &title, const QString &username,
 	}
 	QString encryptedPW = password;
 	for (int i = 0; i < password.length(); i++) {
-		encryptedPW[i] = (QChar)(password[i].unicode() + peepID[i % peepID.length()].unicode());
+		encryptedPW[i] = (QChar) (password[i].unicode()
+				+ peepID[i % peepID.length()].unicode());
 	}
 	QString query;
 
 	QTextStream(&query)
 			<< "INSERT INTO accounts (tag, accountName, userName, passWord, urlID) VALUES ('"
-			<< tag << "','" << title << "','" << username << "','" << encryptedPW
-			<< "','"<< urlID<< "')";
+			<< tag << "','" << title << "','" << username << "','"
+			<< encryptedPW << "','" << urlID << "')";
 
 	DataAccessReply reply = m_sqlConnection->executeAndWait(query, ADD_ACCOUNT);
 
@@ -133,18 +136,19 @@ bool ApplicationUI::createRecord(const QString &title, const QString &username,
 
 	return success;
 }
-QString ApplicationUI::decryptPW(const QString& pw, const QString& peepID){
+QString ApplicationUI::decryptPW(const QString& pw, const QString& peepID) {
 	QString decryptedPW = pw;
 	for (int i = 0; i < pw.length(); i++) {
-		decryptedPW[i] = (QChar)(pw[i].unicode() - peepID[i % peepID.length()].unicode());
+		decryptedPW[i] = (QChar) (pw[i].unicode()
+				- peepID[i % peepID.length()].unicode());
 	}
 	return decryptedPW;
 }
-bool ApplicationUI::copyPassword(const QString& decryptPW){
+bool ApplicationUI::copyPassword(const QString& decryptPW) {
 	Clipboard cboard;
 	cboard.clear();
 	const QString type = "text/plain";
-	return cboard.insert(type,decryptPW.toAscii());
+	return cboard.insert(type, decryptPW.toAscii());
 
 }
 void ApplicationUI::initDataModel() {
@@ -166,24 +170,47 @@ void ApplicationUI::readRecords() {
 		onLoadAsyncResultData(reply);
 	}
 }
+
+bool ApplicationUI::update(const QString &title, const QString &username,
+		const QString &password, const QString &tag, const QString &pk,
+		const QString &peepID, const QString &urlID) {
+	if (password.isEmpty()) {
+			alert(tr("Need to fill all fields)"));
+		}
+	QString sqlQueryModify;
+	QString encryptedPW = password;
+	for (int i = 0; i < password.length(); i++) {
+		encryptedPW[i] = (QChar) (password[i].unicode()
+				+ peepID[i % peepID.length()].unicode());
+	}
+	QTextStream(&sqlQueryModify) << "UPDATE accounts set accountName ='"
+			<< title << "', userName='" << username << "', tag='"
+			<< tag << "', urlID='" << urlID <<"', passWord ='" << encryptedPW << "' where pk ="
+			<< pk;
+	DataAccessReply reply = m_sqlConnection->executeAndWait(sqlQueryModify,
+			UPDATE_ACCOUNT);
+	if (reply.hasError()) {
+		alert(tr("updating records ERROR"));
+	} else {
+		alert(tr("Account Updated."));
+
+	}
+	return true;
+}
 bool ApplicationUI::modify(const QString &title, const QString &username,
 		const QString &password, const QString &pk, const QString &peepID) {
 	QString sqlQueryModify;
 	QString encryptedPW = password;
 	for (int i = 0; i < password.length(); i++) {
-		encryptedPW[i] = (QChar)(password[i].unicode() + peepID[i % peepID.length()].unicode());
+		encryptedPW[i] = (QChar) (password[i].unicode()
+				+ peepID[i % peepID.length()].unicode());
 	}
 	QTextStream(&sqlQueryModify) << "UPDATE accounts set accountName ='"
 			<< title << "', userName='" << username << "', passWord ='"
 			<< encryptedPW << "' where pk =" << pk;
 	DataAccessReply reply = m_sqlConnection->executeAndWait(sqlQueryModify,
 			MODIFY_ACCOUNT);
-	if (reply.hasError()) {
-		alert(tr("reading records ERROR"));
-	} else {
-		alert(tr("Account Updated."));
 
-	}
 	return true;
 }
 bool ApplicationUI::remove(const QString &pk) {
@@ -194,11 +221,13 @@ bool ApplicationUI::remove(const QString &pk) {
 			REMOVE_ACCOUNT);
 	if (reply.hasError()) {
 		alert(tr("reading records ERROR"));
+		return false;
 	} else {
 		alert(tr("Account Removed."));
-		;
+		return true;
 	}
-	return true;
+
+
 }
 bb::cascades::GroupDataModel* ApplicationUI::dataModel() const {
 	return A_dataModel;
@@ -217,7 +246,22 @@ void ApplicationUI::alert(const QString &message) {
 			SLOT(deleteLater()));
 	dialog->show();
 }
+int ApplicationUI::alertRemove(const QString &message) {
+	SystemDialog *dialog; // SystemDialog uses the BB10 native dialog.
+	dialog = new SystemDialog(tr("Yes"), tr("Cancel"), 0); // New dialog with on 'Ok' button, no 'Cancel' button
+	dialog->setTitle(tr("Warning")); // set a title for the message
+	dialog->setBody(message); // set the message itself
+	dialog->setDismissAutomatically(true); // Hides the dialog when a button is pressed.
+	bb::system::SystemUiResult::Type result = dialog->result();
 
+
+	// Setup slot to mark the dialog for deletion in the next event loop after the dialog has been accepted.
+	connect(dialog, SIGNAL(finished(bb::system::SystemUiResult::Type)), dialog,
+			SLOT(deleteLater()));
+	dialog->show();
+
+	return result;
+}
 void ApplicationUI::onLoadAsyncResultData(
 		const bb::data::DataAccessReply& reply) {
 	if (reply.hasError()) {

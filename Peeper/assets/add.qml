@@ -3,11 +3,45 @@ import bb.cascades 1.0
 Page {
     property variant nav
     property variant peepID
-    
-    
+    property variant accountName
+    property variant userName
+    property variant passWord
+    property variant urlIDtext
+    property variant tag
+    property variant pk
+    property variant path
+   
+    onCreationCompleted: {
+        //_app.alert("add created");
+        Application.asleep.connect(onAsleep);
+    }
+    function onAsleep() {
+        var pPage = pPageDefinition.createObject();
+        //_app.alert("add asleep");
+        pPage.accountName = title.text;
+        pPage.userName = username.text;
+        pPage.passWord = password.text;
+        pPage.tag = tags.selectedOption.text;
+        pPage.pk = pk;
+        pPage.path = path;
+        pPage.urlIDtext = urlID.text;
+        pPage.nav = nav;
+        pPage.peepID = peepID;
+        nav.push(pPage);
+    }
+    attachedObjects: [
+        ComponentDefinition {
+            id: pPageDefinition
+            source: "add.qml"
+        }
+    ]
     actions: [
         ActionItem {
-            
+            enabled: {
+                if (path == 1) false;
+                else true;
+            }
+
             id: linkAccess
             title: qsTr("Access")
             onTriggered: {
@@ -62,38 +96,45 @@ Page {
         }
     }
     titleBar: TitleBar {
-        
-        title: qsTr("Add Account")
+
+        title: {
+            if (path == 1) {
+                qsTr("Edit Account Info")
+            } else qsTr("Add Account")
+        }
         visibility: ChromeVisibility.Visible
 
     }
-    
+
     Container {
-        
+
         Divider {
 
         }
         TextField {
             id: title
             hintText: qsTr("Title")
+            text: accountName
 
         }
         TextField {
             id: username
             hintText: qsTr("Username")
+            text: userName
             inputMode: TextFieldInputMode.EmailAddress
 
         }
         TextField {
             id: password
+            text: passWord
             hintText: qsTr("Password")
             inputMode: TextFieldInputMode.Password
-            
-            
+
         }
         TextField {
             id: urlID
-            hintText: qsTr("URL")
+            text: urlIDtext
+            hintText: qsTr("Sample: gmail.com")
             inputMode: TextFieldInputMode.Url
             input.submitKey: SubmitKey.Submit
             input {
@@ -103,11 +144,14 @@ Page {
             }
         }
         DropDown {
+            
             id: tags
             title: qsTr("Select a Tag")
             horizontalAlignment: HorizontalAlignment.Center
+            expanded: false
             Option {
                 text: qsTr("Email Accounts")
+                selected: true
             }
             Option {
                 text: qsTr("Bank Accounts")
@@ -116,6 +160,7 @@ Page {
                 text: qsTr("Work Accounts")
             }
             Option {
+                id: ua
                 text: qsTr("Utility Accounts")
             }
             Option {
@@ -128,17 +173,29 @@ Page {
         }
         Button {
             id: addButton
-            text: qsTr("Add Account")
+            text: {
+                if (path == 1) {
+                    qsTr("Update Account")
+                } else qsTr("Add Account")
+            }
             onClicked: {
+                if (path == 1) {
+                    _app.update(title.text, username.text, password.text, tags.selectedOption.text, pk, peepID.toString(), urlID.text);
+                    _app.readRecords();
 
-                _app.createRecord(title.text, username.text, password.text , tags.selectedOption.text, peepID.toString(),urlID.text);
-
+                }
+                else _app.createRecord(title.text, username.text, password.text, tags.selectedOption.text, peepID.toString(), urlID.text);
                 var page = getAddHomePage();
                 nav.push(page);
             }
             property Page homePage
             function getAddHomePage() {
-                if (! homePage) {
+                if (!homePage && path == 1) {
+                    homePage = accessUpdatePageDefinition.createObject();
+                    homePage.nav = nav;
+                    homePage.peepID = peepID;
+                }
+                else if (! homePage ) {
                     homePage = addHomePageDefinition.createObject();
                     homePage.nav = nav;
                     homePage.peepID = peepID;
@@ -149,6 +206,10 @@ Page {
                 ComponentDefinition {
                     id: addHomePageDefinition
                     source: "Home.qml"
+                },
+                ComponentDefinition {
+                    id: accessUpdatePageDefinition
+                    source: "access.qml"
                 }
             ]
             horizontalAlignment: HorizontalAlignment.Center

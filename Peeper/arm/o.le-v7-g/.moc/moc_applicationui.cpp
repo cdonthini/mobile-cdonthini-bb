@@ -22,8 +22,8 @@ static const uint qt_meta_data_ApplicationUI[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
-       1,   64, // properties
+      12,   14, // methods
+       1,   74, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
@@ -35,16 +35,18 @@ static const uint qt_meta_data_ApplicationUI[] = {
  // methods: signature, parameters, type, tag, flags
      116,   75,   70,   14, 0x02,
      213,  178,   70,   14, 0x02,
-     261,   14,   14,   14, 0x02,
-     293,  283,  275,   14, 0x02,
-     330,  320,   70,   14, 0x02,
-     355,  352,   70,   14, 0x02,
-     375,  371,   70,   14, 0x02,
-     393,  371,   70,   14, 0x02,
-     420,  412,   14,   14, 0x02,
+     305,  261,   70,   14, 0x02,
+     369,   14,   14,   14, 0x02,
+     401,  391,  383,   14, 0x02,
+     438,  428,   70,   14, 0x02,
+     463,  460,   70,   14, 0x02,
+     483,  479,   70,   14, 0x02,
+     501,  479,   70,   14, 0x02,
+     528,  520,   14,   14, 0x02,
+     547,  520,  543,   14, 0x02,
 
  // properties: name, type, flags
-     460,  435, 0x00095409,
+     593,  568, 0x00095409,
 
        0        // eod
 };
@@ -56,11 +58,14 @@ static const char qt_meta_stringdata_ApplicationUI[] = {
     "createRecord(QString,QString,QString,QString,QString,QString)\0"
     "title,username,password,tag,peepID\0"
     "modify(QString,QString,QString,QString,QString)\0"
+    "title,username,password,tag,pk,peepID,urlID\0"
+    "update(QString,QString,QString,QString,QString,QString,QString)\0"
     "readRecords()\0QString\0pw,peepID\0"
     "decryptPW(QString,QString)\0decryptPW\0"
     "copyPassword(QString)\0pk\0remove(QString)\0"
     "pin\0checkPIN(QString)\0createPIN(QString)\0"
-    "message\0alert(QString)\0bb::cascades::DataModel*\0"
+    "message\0alert(QString)\0int\0"
+    "alertRemove(QString)\0bb::cascades::DataModel*\0"
     "dataModel\0"
 };
 
@@ -75,18 +80,22 @@ void ApplicationUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 2: { bool _r = _t->modify((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4])),(*reinterpret_cast< const QString(*)>(_a[5])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 3: _t->readRecords(); break;
-        case 4: { QString _r = _t->decryptPW((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])));
+        case 3: { bool _r = _t->update((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4])),(*reinterpret_cast< const QString(*)>(_a[5])),(*reinterpret_cast< const QString(*)>(_a[6])),(*reinterpret_cast< const QString(*)>(_a[7])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 4: _t->readRecords(); break;
+        case 5: { QString _r = _t->decryptPW((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 5: { bool _r = _t->copyPassword((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 6: { bool _r = _t->copyPassword((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 6: { bool _r = _t->remove((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 7: { bool _r = _t->remove((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 7: { bool _r = _t->checkPIN((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 8: { bool _r = _t->checkPIN((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 8: { bool _r = _t->createPIN((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 9: { bool _r = _t->createPIN((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 9: _t->alert((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 10: _t->alert((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 11: { int _r = _t->alertRemove((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
         default: ;
         }
     }
@@ -124,9 +133,9 @@ int ApplicationUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 12;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {

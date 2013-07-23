@@ -9,6 +9,7 @@ Page {
     property variant tag
     property variant urlID
     property variant pk
+    property bool disableNavi
     property int path
     property variant peepID
 
@@ -19,6 +20,11 @@ Page {
 
     }
 
+    actionBarVisibility: {
+        	if(disableNavi){
+        	    ChromeVisibility.Hidden
+        	}
+        	else ChromeVisibility.Overlay}
     Container {
         layoutProperties: StackLayoutProperties {
 

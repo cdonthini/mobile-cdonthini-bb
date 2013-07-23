@@ -5,6 +5,22 @@ Page {
     property variant nav
     property variant peepID
     actionBarVisibility: ChromeVisibility.Hidden
+    onCreationCompleted: {
+        Application.asleep.connect(onAsleep);
+    }
+    function onAsleep() {
+        var pPage = pPageDefinition.createObject();
+        //_app.alert("homepage asleep");
+        pPage.nav = nav;
+        pPage.peepID = peepID;
+        nav.push(pPage);
+    }
+    attachedObjects: [
+        ComponentDefinition {
+            id: pPageDefinition
+            source: "Home.qml"
+        }
+    ]
     Container {
         layout: DockLayout {
 

@@ -27,6 +27,9 @@ public:
 
     Q_INVOKABLE bool createRecord(const QString &title , const QString &username, const QString &password, const QString &tag, const QString &peepID, const QString &urlID);
     Q_INVOKABLE bool modify(const QString &title , const QString &username, const QString &password, const QString &tag, const QString &peepID);
+    Q_INVOKABLE bool update(const QString &title, const QString &username,
+    		const QString &password, const QString &tag, const QString &pk,
+    		const QString &peepID, const QString &urlID);
     Q_INVOKABLE void readRecords();
     Q_INVOKABLE QString decryptPW(const QString& pw, const QString& peepID);
     Q_INVOKABLE bool copyPassword(const QString& decryptPW);
@@ -35,6 +38,7 @@ public:
     Q_INVOKABLE bool createPIN(const QString &pin);
     Q_INVOKABLE bool dbOpenPublic;
     Q_INVOKABLE void alert(const QString &message);
+    Q_INVOKABLE int alertRemove(const QString &message);
     ~ApplicationUI();
 
 

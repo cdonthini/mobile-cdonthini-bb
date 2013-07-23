@@ -16,29 +16,29 @@ Page {
     titleBar: TitleBar {
         id: check
         title: qsTr("Account Details - ") + accountName
-        visibility: ChromeVisibility.Visible
+        visibility: ChromeVisibility.Default
+        scrollBehavior: TitleBarScrollBehavior.NonSticky
 
     }
 
     onCreationCompleted: {
-
-        Application.awake.connect(onAwake);
+        Application.asleep.connect(onAsleep);
     }
-
-    function onAwake() {
-
+    function onAsleep() {
         var pPage = pPageDefinition.createObject();
+        //_app.alert("pwpage asleep");
         pPage.accountName = accountName;
         pPage.userName = userName;
         pPage.passWord = passWord;
         pPage.tag = tag;
         pPage.pk = pk;
+        pPage.urlID = urlIDLabel.text;
         pPage.path = path;
+        pPage.disableNavi = true;
         pPage.nav = nav;
         pPage.peepID = peepID;
         nav.push(pPage);
     }
-
     attachedObjects: [
         ComponentDefinition {
             id: pPageDefinition
@@ -67,7 +67,6 @@ Page {
                 hintText: qsTr("Your Account name Here")
                 inputMode: TextFieldInputMode.Text
 
-                
                 visible: false
 
             }
@@ -78,13 +77,13 @@ Page {
                 orientation: LayoutOrientation.LeftToRight
             }
             Label {
-                text:"User Name: " + userName
+                text: "User Name: " + userName
                 textStyle.fontSize: FontSize.Large
             }
             TextField {
                 id: unText
                 hintText: qsTr("Your Username Here")
-               
+
                 visible: false
                 inputMode: TextFieldInputMode.EmailAddress
             }
@@ -103,18 +102,18 @@ Page {
             TextField {
                 id: pwText
                 text: _app.decryptPW(passWord.toString(), peepID.toString())
-                
+
                 hintText: qsTr("Your Password Here")
                 inputMode: TextFieldInputMode.Password
-                
+
             }
         }
         Label {
             id: tagText
             text: "Tags: " + tag + " "
         }
-        Divider{
-            
+        Divider {
+
         }
         Container {
             topPadding: 10
@@ -140,6 +139,7 @@ Page {
                 text: qsTr("Go URL")
                 imageSource: "asset:///png/ic_open.png"
                 onClicked: {
+                    _app.copyPassword(_app.decryptPW(passWord.toString(), peepID.toString()))
                     var page = getUrlPage();
                     nav.push(page);
                 }
@@ -149,7 +149,7 @@ Page {
                         urlPage = urlPageDefinition.createObject();
                         urlPage.nav = nav;
                         urlPage.accountName = accountName;
-                        urlPage.htmlContent = "http://"+urlIDLabel.text;
+                        urlPage.htmlContent = "http://" + urlIDLabel.text;
                     }
                     return urlPage;
                 }
@@ -160,7 +160,7 @@ Page {
                     }
                 ]
             }
-            
+
         }
         Divider {
 
@@ -170,7 +170,7 @@ Page {
             horizontalAlignment: HorizontalAlignment.Center
             topMargin: 25.0
             text: qsTr("Home")
-           
+
             onClicked: {
                 var page = getHomePage();
                 nav.push(page);
@@ -206,7 +206,7 @@ Page {
 
                 onClicked: {
                     _app.modify(anText.text, unText.text, pwText.text, pk, peepID.toString());
-                    _app.readRecords();
+
                     var page = getAccessPage();
                     nav.push(page);
                 }
@@ -214,7 +214,14 @@ Page {
                 function getAccessPage() {
                     if (! accessPage) {
                         accessPage = accessPageDefinitionEdit.createObject();
+                        accessPage.accountName = accountName;
+                        accessPage.userName = userName;
+                        accessPage.passWord = pwText.text;
+                        accessPage.urlIDtext = urlID;
+                        accessPage.tag = tag;
                         accessPage.nav = nav;
+                        accessPage.path = 1;
+                        accessPage.pk = pk;
                         accessPage.peepID = peepID;
                     }
                     return accessPage;
@@ -222,7 +229,7 @@ Page {
                 attachedObjects: [
                     ComponentDefinition {
                         id: accessPageDefinitionEdit
-                        source: "access.qml"
+                        source: "add.qml"
                     }
                 ]
 
